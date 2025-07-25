@@ -141,11 +141,12 @@ import { type OpenForwardDialogPayload } from "../../dispatcher/payloads/OpenFor
 import { ShareFormat, type SharePayload } from "../../dispatcher/payloads/SharePayload";
 import Markdown from "../../Markdown";
 import { sanitizeHtmlParams } from "../../Linkify";
+import StaticLogin from "./auth/StaticLogin";
 
 // legacy export
 export { default as Views } from "../../Views";
 
-const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "welcome"];
+const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "welcome", "static_login"];
 
 // Actions that are redirected through the onboarding process prior to being
 // re-dispatched. NOTE: some actions are non-trivial and would require
@@ -217,7 +218,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         realQueryParams: {},
         startingFragmentQueryParams: {},
         config: {},
-        onTokenLoginCompleted: (): void => {},
+        onTokenLoginCompleted: (): void => { },
     };
 
     private firstSyncComplete = false;
@@ -688,6 +689,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 this.viewLogin();
                 break;
+            case "start_static_login":
+                this.setStateForNewView({
+                    view: Views.STATIC_LOGIN
+                });
+                this.notifyNewScreen("static_login");
+                break;
             case "start_password_recovery":
                 this.setStateForNewView({
                     view: Views.FORGOT_PASSWORD,
@@ -711,6 +718,18 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case "view_user_info":
                 this.viewUser(payload.userId, payload.subAction);
                 break;
+            case "view_login_after":
+                this.viewLoginAfter();
+                break;
+
+            case "view_static_chat":
+                this.viewStaticChat();
+                break;
+
+            case "view_static_video":
+                this.viewStaticVideo();
+                break;
+
             case "MatrixActions.RoomState.events": {
                 const event = (payload as IRoomStateEventsActionPayload).event;
                 if (
@@ -781,6 +800,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
             case "view_welcome_page":
                 this.viewWelcome();
+                break;
+            case "start_static_login":
+                this.viewStaticLogin();
                 break;
             case Action.ViewHomePage:
                 this.viewHome(payload.justRegistered);
@@ -1096,6 +1118,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.themeWatcher?.recheck();
     }
 
+    private viewStaticLogin(): void {
+        this.setStateForNewView({
+            view: Views.STATIC_LOGIN
+        })
+        this.notifyNewScreen("static_login");
+        ThemeController.isLogin = true;
+        this.themeWatcher?.recheck();
+    }
+
     private viewHome(justRegistered = false): void {
         // The home page requires the "logged in" view, so we'll set that.
         this.setStateForNewView({
@@ -1107,6 +1138,21 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen("home");
         ThemeController.isLogin = false;
         this.themeWatcher?.recheck();
+    }
+
+    private viewLoginAfter(): void {
+        this.notifyNewScreen("home/login_after");
+        this.setPage(PageType.LoginAfter)
+    }
+
+    private viewStaticChat(): void {
+        this.notifyNewScreen("home/static_chat");
+        this.setPage(PageType.StaticChat)
+    }
+
+    private viewStaticVideo(): void {
+        this.notifyNewScreen("home/static_video");
+        this.setPage(PageType.StaticVideo)
     }
 
     private viewUser(userId: string, subAction: string): void {
@@ -1296,11 +1342,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 <span>
                     {isSpace
                         ? _t("leave_room_dialog|leave_space_question", {
-                              spaceName: roomToLeave?.name ?? _t("common|unnamed_space"),
-                          })
+                            spaceName: roomToLeave?.name ?? _t("common|unnamed_space"),
+                        })
                         : _t("leave_room_dialog|leave_room_question", {
-                              roomName: roomToLeave?.name ?? _t("common|unnamed_room"),
-                          })}
+                            roomName: roomToLeave?.name ?? _t("common|unnamed_room"),
+                        })}
                     {warnings}
                 </span>
             ),
@@ -1783,6 +1829,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: "start_password_recovery",
                 params: params,
             });
+        } else if (screen === 'static_login') {
+            dis.dispatch({
+                action: 'start_static_login'
+            })
         } else if (screen === "soft_logout") {
             if (!!cli?.getUserId() && !Lifecycle.isSoftLogout()) {
                 // Logged in - visit a room
@@ -1922,6 +1972,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 userId: userId,
                 subAction: params?.action,
             });
+        }
+         else if (screen === 'home/login_after') {
+            dis.dispatch({
+                action: Action.LoginAfter
+            })
+        } 
+        else if (screen === 'home/static_chat') {
+            dis.dispatch({
+                action: Action.StaticChat
+            })
+        } else if (screen === 'home/static_video') {
+            dis.dispatch({
+                action: Action.StaticVideo
+            })
         } else {
             logger.info(`Ignoring showScreen for '${screen}'`);
         }
@@ -2073,7 +2137,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (
             initialScreenAfterLogin &&
             // XXX: workaround for https://github.com/vector-im/element-web/issues/11643 causing a login-loop
-            !["welcome", "login", "register", "start_sso", "start_cas"].includes(initialScreenAfterLogin.screen)
+            !["welcome", "login", "register", "start_sso", "start_cas", "static_login"].includes(initialScreenAfterLogin.screen)
         ) {
             fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;
         }
@@ -2186,6 +2250,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             );
         } else if (this.state.view === Views.LOCK_STOLEN) {
             view = <SessionLockStolenView />;
+        } else if (this.state.view === Views.STATIC_LOGIN) {
+            view = <StaticLogin />
         } else {
             logger.error(`Unknown view ${this.state.view}`);
             return null;

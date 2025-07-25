@@ -67,6 +67,10 @@ import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushR
 import { type ConfigOptions } from "../../SdkConfig";
 import { MatrixClientContextProvider } from "./MatrixClientContextProvider";
 import { Landmark, LandmarkNavigation } from "../../accessibility/LandmarkNavigation";
+import LoginAfter from "./LoginAfter";
+import StaticChat from "./StaticChat";
+import StaticVideo from "./StaticVideo";
+import StaticSidebar from "../views/StaticSidebar";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -688,6 +692,18 @@ class LoggedInView extends React.Component<IProps, IState> {
                     );
                 }
                 break;
+
+            case PageTypes.LoginAfter:
+                pageElement = <LoginAfter />;
+                break;
+
+            case PageTypes.StaticChat:
+                pageElement = <StaticChat />;
+                break;
+
+            case PageTypes.StaticVideo:
+                pageElement = <StaticVideo />;
+                break;
         }
 
         const wrapperClasses = classNames({
@@ -711,45 +727,120 @@ class LoggedInView extends React.Component<IProps, IState> {
         });
 
         const shouldUseMinimizedUI = !useNewRoomList && this.props.collapseLhs;
+
+        const hashPath = window.location.hash.substring(1);
         return (
-            <MatrixClientContextProvider client={this._matrixClient}>
-                <div
-                    onPaste={this.onPaste}
-                    onKeyDown={this.onReactKeyDown}
-                    className={wrapperClasses}
-                    aria-hidden={this.props.hideToSRUsers}
-                >
-                    <ToastContainer />
-                    <div className={bodyClasses}>
-                        <div className="mx_LeftPanel_outerWrapper">
-                            <LeftPanelLiveShareWarning isMinimized={shouldUseMinimizedUI || false} />
-                            <div className={leftPanelWrapperClasses}>
-                                {!useNewRoomList && (
-                                    <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
-                                )}
-                                <SpacePanel />
-                                {!useNewRoomList && <BackdropPanel backgroundImage={this.state.backgroundImage} />}
-                                <div
-                                    className="mx_LeftPanel_wrapper--user"
-                                    ref={this._resizeContainer}
-                                    data-collapsed={shouldUseMinimizedUI ? true : undefined}
-                                >
-                                    <LeftPanel
-                                        pageType={this.props.page_type as PageTypes}
-                                        isMinimized={shouldUseMinimizedUI || false}
-                                        resizeNotifier={this.props.resizeNotifier}
-                                    />
-                                </div>
+            // <MatrixClientContextProvider client={this._matrixClient}>
+            //     <div
+            //         onPaste={this.onPaste}
+            //         onKeyDown={this.onReactKeyDown}
+            //         className={wrapperClasses}
+            //         aria-hidden={this.props.hideToSRUsers}
+            //     >
+            //         <ToastContainer />
+            //         <div className={bodyClasses}>
+            //             <div className="mx_LeftPanel_outerWrapper">
+            //                 <LeftPanelLiveShareWarning isMinimized={shouldUseMinimizedUI || false} />
+            //                 <div className={leftPanelWrapperClasses}>
+            //                     {!useNewRoomList && (
+            //                         <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
+            //                     )}
+            //                     <SpacePanel />
+            //                     {!useNewRoomList && <BackdropPanel backgroundImage={this.state.backgroundImage} />}
+            //                     <div
+            //                         className="mx_LeftPanel_wrapper--user"
+            //                         ref={this._resizeContainer}
+            //                         data-collapsed={shouldUseMinimizedUI ? true : undefined}
+            //                     >
+            //                         <LeftPanel
+            //                             pageType={this.props.page_type as PageTypes}
+            //                             isMinimized={shouldUseMinimizedUI || false}
+            //                             resizeNotifier={this.props.resizeNotifier}
+            //                         />
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //             <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
+            //             {/* <div className="mx_RoomView_wrapper">{pageElement}</div> */}
+            //         </div>
+            //     </div>
+            //     <PipContainer />
+            //     <NonUrgentToastContainer />
+            //     {audioFeedArraysForCalls}
+            // </MatrixClientContextProvider>
+            <>
+                {hashPath === '/home/login_after' ? (
+                    <MatrixClientContextProvider client={this._matrixClient}>
+                        <div
+                            onPaste={this.onPaste}
+                            onKeyDown={this.onReactKeyDown}
+                            className={wrapperClasses}
+                            aria-hidden={this.props.hideToSRUsers}
+                        >
+                            <ToastContainer />
+                            <div className={bodyClasses}>
+                                <div className="mx_RoomView_wrapper">{pageElement}</div>
                             </div>
                         </div>
-                        <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
-                        <div className="mx_RoomView_wrapper">{pageElement}</div>
-                    </div>
-                </div>
-                <PipContainer />
-                <NonUrgentToastContainer />
-                {audioFeedArraysForCalls}
-            </MatrixClientContextProvider>
+                    </MatrixClientContextProvider>
+                ) : hashPath === '/home/static_chat' || hashPath === '/home/static_video' ? (
+                    <MatrixClientContextProvider client={this._matrixClient}>
+                        <div
+                            onPaste={this.onPaste}
+                            onKeyDown={this.onReactKeyDown}
+                            className={wrapperClasses}
+                            aria-hidden={this.props.hideToSRUsers}
+                        >
+                            <ToastContainer />
+                            <div className={bodyClasses}>
+                                <div className="mx_LeftPanel_outerWrapper">
+                                    <StaticSidebar />
+                                </div>
+                                <div className="mx_RoomView_wrapper">{pageElement}</div>
+                            </div>
+                        </div>
+                    </MatrixClientContextProvider>
+                ) : (
+                    <MatrixClientContextProvider client={this._matrixClient}>
+                        <div
+                            onPaste={this.onPaste}
+                            onKeyDown={this.onReactKeyDown}
+                            className={wrapperClasses}
+                            aria-hidden={this.props.hideToSRUsers}
+                        >
+                            <ToastContainer />
+                            <div className={bodyClasses}>
+                                <div className="mx_LeftPanel_outerWrapper">
+                                    <LeftPanelLiveShareWarning isMinimized={shouldUseMinimizedUI || false} />
+                                    <div className={leftPanelWrapperClasses}>
+                                        {!useNewRoomList && (
+                                            <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
+                                        )}
+                                        <SpacePanel />
+                                        {!useNewRoomList && <BackdropPanel backgroundImage={this.state.backgroundImage} />}
+                                        <div
+                                            className="mx_LeftPanel_wrapper--user"
+                                            ref={this._resizeContainer}
+                                            data-collapsed={shouldUseMinimizedUI ? true : undefined}
+                                        >
+                                            <LeftPanel
+                                                pageType={this.props.page_type as PageTypes}
+                                                isMinimized={shouldUseMinimizedUI || false}
+                                                resizeNotifier={this.props.resizeNotifier}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
+                                <div className="mx_RoomView_wrapper">{pageElement}</div>
+                            </div>
+                        </div>
+                        <PipContainer />
+                        <NonUrgentToastContainer />
+                        {audioFeedArraysForCalls}
+                    </MatrixClientContextProvider>
+                )}
+            </>
         );
     }
 }

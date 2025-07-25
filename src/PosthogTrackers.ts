@@ -29,12 +29,16 @@ const notLoggedInMap: Record<Exclude<Views, Views.LOGGED_IN>, ScreenName> = {
     [Views.E2E_SETUP]: "E2ESetup",
     [Views.SOFT_LOGOUT]: "SoftLogout",
     [Views.LOCK_STOLEN]: "SessionLockStolen",
+    [Views.STATIC_LOGIN]: "StaticLogin"
 };
 
 const loggedInPageTypeMap: Record<PageType, ScreenName> = {
     [PageType.HomePage]: "Home",
     [PageType.RoomView]: "Room",
     [PageType.UserView]: "User",
+    [PageType.LoginAfter]: "LoginAfter",
+    [PageType.StaticChat]: "StaticChat",
+    [PageType.StaticVideo]: "StaticVideo"
 };
 
 export default class PosthogTrackers {

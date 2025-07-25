@@ -386,4 +386,13 @@ export enum Action {
      * Open the create room dialog
      */
     CreateRoom = "view_create_room",
+
+    // open login after screen
+    LoginAfter = "view_login_after",
+
+    // open static chat screen
+    StaticChat = "view_static_chat",
+
+    // open static video screen
+    StaticVideo = "view_static_video",
 }

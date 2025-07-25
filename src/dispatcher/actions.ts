@@ -104,6 +104,11 @@ export enum Action {
     ToggleSpacePanel = "toggle_space_panel",
 
     /**
+     * Toggles the Static sidebar. No additional payload information required.
+     */
+    ToggleStaticBar = "toggle_static_sidebar",
+
+    /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
      */
     MigrateBaseFontSize = "migrate_base_font_size",

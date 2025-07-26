@@ -1,4 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { FaAngleRight, FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { IoIosArrowDown } from "react-icons/io";
+import { SlSettings } from "react-icons/sl";
+import { HiOutlinePhotograph, HiOutlineSearch } from "react-icons/hi";
+import { GoPlus } from "react-icons/go";
+import { BsPlayCircle, BsThreeDotsVertical } from "react-icons/bs";
+import chatBackground from "../../../res/img/chatBackground.png"
+import { IoDocumentOutline, IoFolderOpenOutline } from "react-icons/io5";
+import { AiOutlineLink } from "react-icons/ai";
+import { HiOutlinePhoto } from "react-icons/hi2";
+import { PiFolders } from "react-icons/pi";
 
 interface Contact {
   id: number;
@@ -110,6 +121,16 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
         avatar: "https://i.pravatar.cc/40?img=5",
         lastMessage: "D'accord, on se voit demain",
         lastMessageTime: "10:15",
+        isOnline: false,
+        isTyping: false,
+        unreadCount: 0,
+      },
+      {
+        id: 5,
+        name: "Hello Soumaré",
+        avatar: "https://i.pravatar.cc/40?img=6",
+        lastMessage: "D'accord1, no se voit demain dello",
+        lastMessageTime: "10:20",
         isOnline: false,
         isTyping: false,
         unreadCount: 0,
@@ -253,7 +274,7 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
     } = this.state;
 
     return (
-      <div className="flex h-screen bg-gray-50 text-sm overflow-hidden">
+      <div className="flex min-h-screen text-sm border border-gray-300 rounded-4xl overflow-hidden p-5">
         {/* Mobile Overlay */}
         {isSidebarOpen && (
           <div
@@ -264,17 +285,17 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
 
         {/* Left Sidebar - Contacts Panel */}
         <aside
-          className={`fixed lg:relative z-50 h-full w-72 bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out
+          className={`pr-3 fixed lg:relative z-50 h-full w-72 bg-white flex flex-col gap-5 transition-all duration-300 ease-in-out
             ${isSidebarOpen ? "left-0" : "-left-full"} lg:left-0 lg:w-72 xl:w-80`}
         >
           {/* Header */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">K</span>
-                </div>
-                <h1 className="text-lg font-bold text-gray-900">Kumpa</h1>
+          <div className="w-full p-4 border-b border-gray-200">
+            <div className="w-full flex items-center justify-between">
+              <div className="flex justify-start items-center gap-3">
+                <button className="p-2 rounded-full bg-gray-200 text-black cursor-pointer outline-none">
+                  <FaChevronLeft />
+                </button>
+                <p className="text-lg">Chat</p>
               </div>
               <button
                 className="lg:hidden p-1.5 rounded-full hover:bg-gray-100"
@@ -288,83 +309,89 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
           </div>
 
           {/* User Profile Section */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center space-x-3">
+          <div className="w-full">
+            <div className="w-full flex flex-col items-center gap-3">
+              <div className="w-full flex justify-end items-center">
+                <button className="text-gray-500 cursor-pointer"><SlSettings fontSize={24} /></button>
+              </div>
               <div className="relative">
                 <img
                   src="https://i.pravatar.cc/84"
                   alt="Profile"
-                  className="w-12 h-12 rounded-full border-2 border-white shadow-sm"
+                  className="w-[84px] h-[84px] rounded-full border-2 border-white shadow-sm"
                 />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+                <div className="absolute top-2 right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 text-sm truncate">Abdoulaye Fall</h3>
-                <div className="flex items-center space-x-1.5">
-                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-                  <span className="text-xs text-gray-600">Disponible</span>
-                  <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+              <div className="w-full flex flex-col justify-center items-center gap-3">
+                <h3 className="w-full text-center text-gray-900 text-xl truncate">Abdoulaye Fall</h3>
+                <div className="flex justify-center items-center relative">
+                  <select className="bg-[#33C41329] p-1.5 px-8 rounded-lg font-normal appearance-none outline-none">
+                    <option>Disponible</option>
+                  </select>
+                  <p className="absolute top-1/2 -translate-y-1/2 right-2.5"><IoIosArrowDown /></p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="p-3 border-b border-gray-200">
+          <div className="w-full">
             <div className="relative">
               <input
                 placeholder="Rechercher..."
-                className="w-full pr-8 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm"
+                className="w-full pr-8 p-2 rounded-lg bg-[#C7C7C729] text-black outline-none text-sm"
               />
-              <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+              <button className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B5B5B5]">
+                <HiOutlineSearch fontSize={16} />
+              </button>
+            </div>
+          </div>
+
+          <div className="w-full flex justify-between items-center">
+            <div className="flex justify-start items-center">
+              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Derniers messages</h4>
+            </div>
+            <div className="flex justify-end items-center gap-2">
+              <button className="p-1 bg-[#DEF6D9] rounded-full cursor-pointer">
+                <GoPlus color="#39785A" fontSize={16} />
+              </button>
+              <button className="cursor-pointer">
+                <BsThreeDotsVertical fontSize={16} />
+              </button>
             </div>
           </div>
 
           {/* Contacts List */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="px-3 py-2">
-              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Derniers messages</h4>
-            </div>
+          <div className="flex flex-col overflow-y-auto gap-2" style={{ scrollbarWidth: 'none' }}>
             {contacts.map((contact) => (
               <div
                 key={contact.id}
-                className={`px-3 py-2.5 hover:bg-gray-50 cursor-pointer transition-colors duration-150 ${selectedContact?.id === contact.id ? 'bg-green-50 border-r-2 border-green-500' : ''
+                className={`px-3 py-2.5 rounded-lg hover:bg-gray-200 cursor-pointer transition-colors duration-150 ${selectedContact?.id === contact.id ? 'bg-gray-200' : ''
                   }`}
                 onClick={() => this.selectContact(contact)}
               >
                 <div className="flex items-center space-x-3">
-                  <div className="relative">
-                    <img
-                      src={contact.avatar}
-                      alt={contact.name}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    {contact.isOnline && (
-                      <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                    )}
-                  </div>
+                  <img
+                    src={contact.avatar}
+                    alt={contact.name}
+                    className="w-10 h-10 rounded-full"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h5 className="font-medium text-gray-900 truncate text-sm">{contact.name}</h5>
+                      <div className="flex justify-start items-center gap-1">
+                        <h5 className="font-medium text-gray-900 truncate text-sm">{contact.name}</h5>
+                        {contact.unreadCount > 0 && (
+                          <span className="bg-[#39785A] text-white text-[10px] rounded-full min-w-[16px] min-h-[16px] grid items-center text-center">
+                            {contact.unreadCount}
+                          </span>
+                        )}
+                      </div>
                       <span className="text-xs text-gray-500 ml-2">{contact.lastMessageTime}</span>
                     </div>
                     <div className="flex items-center justify-between mt-0.5">
                       <p className="text-xs text-gray-600 truncate">
-                        {contact.isTyping ? (
-                          <span className="text-green-600">est en train d'écrire...</span>
-                        ) : (
-                          contact.lastMessage
-                        )}
+                        {contact.lastMessage}
                       </p>
-                      {contact.unreadCount > 0 && (
-                        <span className="ml-2 bg-green-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[16px] text-center">
-                          {contact.unreadCount}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -374,11 +401,11 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
         </aside>
 
         {/* Center Panel - Chat Window */}
-        <main className="flex-1 flex flex-col min-w-0">
+        <main className="min-h-[90vh] flex-1 flex flex-col overflow-hidden rounded-3xl" style={{ backgroundImage: `url(${chatBackground})` }}>
           {selectedContact ? (
             <>
               {/* Chat Header */}
-              <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
+              <div className="bg-transparent border-b border-gray-200 px-4 py-3 flex items-center justify-between sticky top-0 z-10">
                 <div className="flex items-center space-x-3">
                   <button
                     className="lg:hidden p-1.5 rounded-full hover:bg-gray-100"
@@ -425,7 +452,7 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
               </div>
 
               {/* Messages Area */}
-              <div className="flex-1 overflow-y-auto scrollbar-none bg-gray-50 p-4" style={{ scrollbarWidth: 'none' }}>
+              <div className="flex-1 overflow-y-auto scrollbar-none bg-transparent p-4" style={{ scrollbarWidth: 'none' }}>
                 <div className="max-w-4xl mx-auto space-y-3">
                   {/* Date Separator */}
                   <div className="text-center">
@@ -442,8 +469,8 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
                     >
                       <div
                         className={`max-w-xs lg:max-w-md px-3 py-2 rounded-2xl shadow-sm ${message.isOutgoing
-                            ? 'bg-[ #DEDEDE] text-black'
-                            : 'bg-white text-gray-900'
+                          ? 'bg-[ #DEDEDE] text-black'
+                          : 'bg-white text-gray-900'
                           }`}
                       >
                         <p className="text-sm">{message.text}</p>
@@ -471,7 +498,7 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
               </div>
 
               {/* Message Input */}
-              <div className="bg-white border-t border-gray-200 p-3 sticky bottom-0">
+              <div className="bg-transparent border-t border-gray-200 p-3 sticky bottom-0">
                 <div className="max-w-4xl mx-auto">
                   <div className="flex items-center space-x-2">
                     <button className="p-1.5 rounded-full hover:bg-gray-100">
@@ -518,26 +545,23 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
 
         {/* Right Sidebar - Media Panel */}
         <aside
-          className={`fixed xl:relative z-40 h-full w-72 bg-white border-l border-gray-200 flex flex-col transition-all duration-300 ease-in-out
+          className={`pl-3 fixed xl:relative z-40 h-full w-72 bg-white flex flex-col gap-5 transition-all duration-300 ease-in-out
             ${isMediaPanelOpen ? "right-0" : "-right-full"} xl:right-0 xl:w-80`}
         >
           {/* Header */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-gray-900">Médias</h2>
-              <button
-                className="xl:hidden p-1.5 rounded-full hover:bg-gray-100"
-                onClick={this.toggleMediaPanel}
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
+          <div className="w-full p-4 border-b border-gray-200">
+            <div className="w-full flex items-center justify-between">
+              <div className="flex justify-start items-center gap-3">
+                <button className="p-2 rounded-full bg-gray-200 text-black cursor-pointer outline-none">
+                  <FaChevronRight />
+                </button>
+                <p className="text-lg">Media</p>
+              </div>
             </div>
           </div>
 
           {/* File Statistics */}
-          <div className="p-4 border-b border-gray-200">
+          {/* <div className="p-4 border-b border-gray-200">
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-blue-50 p-3 rounded-lg">
                 <div className="flex items-center space-x-2">
@@ -566,49 +590,63 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
                 </div>
               </div>
             </div>
+          </div> */}
+          <div className="w-full flex flex-col gap-3">
+            <p className="text-">Fichiers</p>
+            <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full rounded-lg flex flex-col gap-1 p-5 bg-[#19AFD829]">
+                <p>Total fichiers</p>
+                <div className="flex justify-start items-center gap-1">
+                  <IoFolderOpenOutline fontSize={20} color="#85C9DC" />
+                  <p>150</p>
+                </div>
+              </div>
+              <div className="w-full rounded-lg flex flex-col gap-1 p-5 bg-[#83838329]">
+                <p>Les liens</p>
+                <div className="flex justify-start items-center gap-1">
+                  <AiOutlineLink fontSize={20} color="#B2B2B2" />
+                  <p>15</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* File Types */}
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-gray-900 text-sm">Types de fichiers</h3>
-              <button className="p-1 rounded-full hover:bg-gray-100">
-                <svg className="w-3 h-3 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
+          <div className="w-full border-t border-b border-gray-200 py-3">
+            <div className="w-full flex items-center justify-between mb-3">
+              <h3 className="text-gray-900 text-sm">Types de fichiers</h3>
+              <button className="rounded-full hover:bg-gray-100 cursor-pointer">
+                <BsThreeDotsVertical fontSize={16} />
               </button>
             </div>
-            <div className="space-y-2">
+            <div className="w-full flex flex-col gap-3">
               {[
-                { type: 'document', label: 'Documents', count: 45, icon: '📄' },
-                { type: 'photo', label: 'Photos', count: 20, icon: '🖼️' },
-                { type: 'video', label: 'Vidéos', count: 5, icon: '🎥' },
-                { type: 'other', label: 'Autres', count: 15, icon: '📁' },
+                { type: 'document', color: '#65CDEB', bgColor: '#DAF2F9', label: 'Documents', count: 45, icon: <IoFolderOpenOutline fontSize={20} /> },
+                { type: 'photo', color: '#6BD154', bgColor: '#DEF6D9', label: 'Photos', count: 20, icon: <HiOutlinePhoto fontSize={20} /> },
+                { type: 'video', color: '#FFD84B', bgColor: '#FFD84B4D', label: 'Vidéos', count: 5, icon: <BsPlayCircle fontSize={20} /> },
+                { type: 'other', color: '#FF4B4B', bgColor: '#FF4B4B4D', label: 'Autres', count: 15, icon: <PiFolders fontSize={20} /> },
               ].map((fileType) => (
-                <div
-                  key={fileType.type}
-                  className="flex items-center justify-between p-2.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-150"
-                >
-                  <div className="flex items-center space-x-2">
-                    <span className="text-lg">{fileType.icon}</span>
-                    <span className="font-medium text-gray-900 text-sm">{fileType.label}</span>
+                <div key={fileType.type} className="w-full flex justify-between items-center p-2">
+                  <div className="flex justify-start items-center gap-2">
+                    <div className="p-3 rounded-full" style={{ backgroundColor: fileType.bgColor, color: fileType.color }}>
+                      {fileType.icon}
+                    </div>
+                    <div className="flex flex-col justify-between">
+                      <p className="text-sm">{fileType.label}</p>
+                      <span className="text-xs text-gray-400">{fileType.count} {fileType.type}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1.5">
-                    <span className="text-xs text-gray-500">{fileType.count} fichiers</span>
-                    <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </div>
+                  <FaAngleRight />
                 </div>
               ))}
             </div>
           </div>
 
           {/* Recent Files */}
-          <div className="flex-1 overflow-y-auto p-4">
-            <div className="flex items-center justify-between mb-3">
+          <div className="w-full overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
+            <div className="w-full flex items-center justify-between mb-3">
               <h3 className="font-semibold text-gray-900 text-sm">Derniers fichiers reçus</h3>
-              <button className="text-xs text-green-600 hover:text-green-700 font-medium">
+              <button className="text-xs text-green-600 hover:text-green-700 font-medium cursor-pointer">
                 Voir tout
               </button>
             </div>
@@ -618,14 +656,13 @@ export default class StaticChat extends React.Component<{}, StaticChatState> {
                   key={file.id}
                   className="flex items-center space-x-2.5 p-2.5 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-150"
                 >
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${this.getFileTypeColor(file.type)}`}>
-                    <span className="text-sm">{this.getFileIcon(file.type)}</span>
+                  <div className={`p-3 rounded-full bg-[#EBEBEB]`}>
+                    <IoDocumentOutline color="#A1A1A1" fontSize={20} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate text-sm">{file.name}</p>
-                    <p className="text-xs text-gray-500">{file.timestamp}</p>
+                  <div className="flex-1">
+                    <p className="text-gray-900 truncate text-sm">{file.name}</p>
+                    <p className="text-xs text-gray-400">{file.timestamp}</p>
                   </div>
-                  <span className="text-xs text-gray-400">{file.size}</span>
                 </div>
               ))}
             </div>

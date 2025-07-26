@@ -15,6 +15,9 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { PiCalendarCheckLight, PiVideoCameraLight } from "react-icons/pi";
+import { FaRegShareFromSquare } from "react-icons/fa6";
+import { TbEdit } from "react-icons/tb";
+import { SlSettings } from "react-icons/sl";
 import AccessibleButton from "./elements/AccessibleButton";
 import { KeyboardShortcut } from "./settings/KeyboardShortcut";
 import UserMenu from "../structures/UserMenu";
@@ -121,15 +124,20 @@ const StaticSidebar: React.FC = () => {
                     <span className="text-xs md:text-sm font-semibold">Chat</span>
                 </div>
                 <div className="w-full flex flex-col gap-0.5 justify-center items-center cursor-pointer hover:text-[#39785A]">
-                    <PiVideoCameraLight fontSize={28} />
-                    <span className="text-xs md:text-sm">Reunion</span>
+                    <FaRegShareFromSquare fontSize={26} />
+                    <span className="text-xs md:text-sm">Inviter</span>
                 </div>
                 <div className="w-full flex flex-col gap-0.5 justify-center items-center cursor-pointer hover:text-[#39785A]">
-                    <PiCalendarCheckLight fontSize={28} />
-                    <span className="text-xs md:text-sm">Calendar</span>
+                    <TbEdit fontSize={28} />
+                    <span className="text-xs md:text-sm">Créer</span>
                 </div>
             </nav>
-            <img src={require("../../../res/img/dummyUserPic.png")} className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover" alt="User Image" />
+            <div className="w-full flex flex-col justify-center items-center gap-6">
+                <div className="w-full flex flex-col gap-0.5 justify-center items-center cursor-pointer hover:text-[#39785A]">
+                    <SlSettings fontSize={28} />
+                </div>
+                <img src={require("../../../res/img/dummyUserPic.png")} className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover" alt="User Image" />
+            </div>
         </aside>
 
     )

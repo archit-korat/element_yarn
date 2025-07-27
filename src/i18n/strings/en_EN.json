@@ -161,6 +161,11 @@
         "zoom_in": "Zoom in",
         "zoom_out": "Zoom out"
     },
+    "login_page": {
+        "sign_in": "Sign In",
+        "username": "Username",
+        "password": "Password"
+    },
     "analytics": {
         "accept_button": "That's fine",
         "bullet_1": "We <Bold>don't</Bold> record or profile any account data",

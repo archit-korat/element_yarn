@@ -14,7 +14,8 @@ enum PageType {
     UserView = "user_view",
     LoginAfter = "login_after",
     StaticChat = "static_chat",
-    StaticVideo = "static_video"
+    StaticVideo = "static_video",
+    StaticSplaceScreen = "static_splace_screen"
 }
 
 export default PageType;

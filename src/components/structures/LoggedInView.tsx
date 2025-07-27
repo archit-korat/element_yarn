@@ -71,6 +71,7 @@ import LoginAfter from "./LoginAfter";
 import StaticChat from "./StaticChat";
 import StaticVideo from "./StaticVideo";
 import StaticSidebar from "../views/StaticSidebar";
+import StaticSplaceScreen from "./Staticsplacescreen";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -697,6 +698,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                 pageElement = <LoginAfter />;
                 break;
 
+            case PageTypes.StaticSplaceScreen:
+                pageElement = <StaticSplaceScreen />;
+                break;
+
             case PageTypes.StaticChat:
                 pageElement = <StaticChat />;
                 break;
@@ -769,7 +774,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             //     {audioFeedArraysForCalls}
             // </MatrixClientContextProvider>
             <>
-                {hashPath === '/home/login_after' ? (
+                {hashPath === '/home/login_after' || hashPath === '/home/static_splace_screen' ? (
                     <MatrixClientContextProvider client={this._matrixClient}>
                         <div
                             onPaste={this.onPaste}

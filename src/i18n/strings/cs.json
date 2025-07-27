@@ -163,6 +163,11 @@
         "zoom_in": "Přiblížit",
         "zoom_out": "Oddálit"
     },
+        "login_page": {
+          "sign_in": "Přihlásit",
+          "username": "Uživatelské jméno",
+          "password": "Heslo"
+        },
     "analytics": {
         "accept_button": "To je v pořádku",
         "bullet_1": "<Bold>Nezaznamenáváme ani neprofilujeme</Bold> žádné údaje o účtu",

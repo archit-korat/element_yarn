@@ -721,6 +721,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case "view_login_after":
                 this.viewLoginAfter();
                 break;
+            case "view_static_splace_screen":
+                this.viewStaticSplaceScreen();
+                break;
 
             case "view_static_chat":
                 this.viewStaticChat();
@@ -1144,7 +1147,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.notifyNewScreen("home/login_after");
         this.setPage(PageType.LoginAfter)
     }
-
+    private viewStaticSplaceScreen(): void {
+        this.notifyNewScreen("home/static_splace_screen");
+        this.setPage(PageType.StaticSplaceScreen)
+    }
     private viewStaticChat(): void {
         this.notifyNewScreen("home/static_chat");
         this.setPage(PageType.StaticChat)
@@ -1978,6 +1984,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: Action.LoginAfter
             })
         } 
+        else if (screen === 'home/static_splace_screen') {
+            dis.dispatch({
+                action: Action.StaticSplaceScreen
+            })
+        }
         else if (screen === 'home/static_chat') {
             dis.dispatch({
                 action: Action.StaticChat

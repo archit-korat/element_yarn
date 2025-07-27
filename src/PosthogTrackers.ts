@@ -38,7 +38,8 @@ const loggedInPageTypeMap: Record<PageType, ScreenName> = {
     [PageType.UserView]: "User",
     [PageType.LoginAfter]: "LoginAfter",
     [PageType.StaticChat]: "StaticChat",
-    [PageType.StaticVideo]: "StaticVideo"
+    [PageType.StaticVideo]: "StaticVideo",
+    [PageType.StaticSplaceScreen]: "StaticSplaceScreen"
 };
 
 export default class PosthogTrackers {

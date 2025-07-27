@@ -400,4 +400,7 @@ export enum Action {
 
     // open static video screen
     StaticVideo = "view_static_video",
+
+    // open static splace screen
+    StaticSplaceScreen = "view_static_splace_screen",
 }

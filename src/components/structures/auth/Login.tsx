@@ -31,6 +31,15 @@ import AccessibleButton, { type ButtonEvent } from "../../views/elements/Accessi
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
+import bgImage from "../../../../res/img/Backgroundimage.png";
+import logo from "../../../../res/img/kampa.png";
+import childImg from "../../../../res/img/kumpaloginimg.png";
+import sliderImg from "../../../../res/img/sliderImage.png";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -148,6 +157,8 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     }
 
     public isBusy = (): boolean => !!this.state.busy || !!this.props.busy;
+
+
 
     public onPasswordLogin: OnPasswordLogin = async (
         username: string | undefined,
@@ -305,6 +316,29 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             this.onRegisterClick(ev);
         }
     };
+
+    public slides = [
+        {
+            title: "Lorem ipsum dolor sit amet consectetur. Nunc.",
+            img: childImg,
+            desc: "Lorem ipsum dolor sit amet consectetur. Turpis tellus in purus aliquet lobortis ipsum. Nulla sed mauris posuere lobortis vestibulum tincidunt orci est. Tortor cras vestibulum vel cras turpis proin.",
+        },
+        {
+            title: "Second slide headline.",
+            img: sliderImg,
+            desc: "Second slide description goes here. You can add more slides as needed.",
+        },
+        {
+            title: "Third slide headline.",
+            img: childImg,
+            desc: "Third slide description goes here. You can add more slides as needed.",
+        },
+        {
+            title: "Fourth slide headline.",
+            img: sliderImg,
+            desc: "Fourth slide description goes here. You can add more slides as needed.",
+        },
+    ];
 
     private async checkServerLiveliness({
         hsUrl,
@@ -519,7 +553,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         {
                             a: (sub) => (
                                 <AccessibleButton kind="link_inline" onClick={this.onTryRegisterClick}>
-                                    {sub}
+                                    {sub} 1
                                 </AccessibleButton>
                             ),
                         },
@@ -530,7 +564,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
         return (
             <AuthPage>
-                <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
+                {/* <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
                         {_t("action|sign_in")}
@@ -545,7 +579,77 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     />
                     {this.renderLoginComponentForFlows()}
                     {footer}
-                </AuthBody>
+                </AuthBody> */}
+                <div
+                    className="min-h-screen flex items-center justify-center bg-cover bg-center"
+                    style={{ backgroundImage: `url(${bgImage})` }}
+                >
+                    <div className="bg-white mx-auto w-[90%] max-w-4xl max-h-[80vh] flex flex-col md:flex-row rounded-xl overflow-hidden shadow-xl relative z-10">
+                        <div className="w-full md:w-2/5 flex flex-col items-center justify-center p-6 sm:p-8 bg-white gap-4">
+                            <img src={logo} alt="Kumpa Logo" className="w-24 sm:w-28 mb-2" />
+                            <div className="text-center text-gray-900 text-sm sm:text-base font-semibold leading-snug">
+                                Bienvenue dans votre plateforme d'échanges sécurisés
+                            </div>
+                            <button
+                                onClick={this.onTryRegisterClick}
+                                className="w-full max-w-xs cursor-pointer bg-[#2A7856] hover:bg-[#256346] text-white text-base font-semibold py-2 px-6 rounded transition-colors duration-300"
+                            >
+                                Se connecter
+                            </button>
+                        </div>
+                        <div className="hidden md:flex w-full md:w-3/5 relative items-center justify-center min-h-[350px]">
+                            <Swiper
+                                modules={[Pagination, Autoplay]}
+                                pagination={{
+                                    clickable: true,
+                                    bulletClass: "swiper-pagination-bullet",
+                                    bulletActiveClass: "swiper-pagination-bullet-active",
+                                }}
+                                effect="fade"
+                                autoplay={{
+                                    delay: 3000,
+                                    disableOnInteraction: false,
+                                }}
+                                className="w-full h-full flex flex-col items-center justify-center"
+                            >
+                                {this.slides.map((slide, idx) => (
+                                    <SwiperSlide key={idx}>
+                                        <div className="relative w-full h-full flex flex-col items-center justify-center gap-2">
+                                            <img src={slide.img} className="w-full h-full object-cover" alt="slide img" />
+                                            <div className="absolute top-0 left-0 w-full h-full bg-black/50" />
+                                            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-[90%] max-h-[90px] flex flex-col gap-1 text-white text-center">
+                                                <p className="font-semibold text-sm md:text-base truncate">{slide.title}</p>
+                                                <p className="text-xs md:text-sm">{slide.desc}</p>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+
+                            <style>{`
+                                .swiper-pagination {
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    bottom: 16px !important;
+                                }
+                                .swiper-pagination-bullet {
+                                    background: #FDEF42;
+                                    width: 10px;
+                                    height: 10px;
+                                    opacity: 1 !important;
+                                    margin: 0 4px !important;
+                                }
+                                .swiper-pagination-bullet-active {
+                                    width: 15px;
+                                    height: 15px;
+                                    background-color: #39785A;
+                                    border: 3px solid #FDEF42;
+                                }
+                            `}</style>
+                        </div>
+                    </div>
+                </div>
             </AuthPage>
         );
     }

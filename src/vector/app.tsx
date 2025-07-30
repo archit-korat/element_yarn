@@ -74,7 +74,7 @@ export async function loadApp(fragParams: QueryDict, matrixChatRef: React.Ref<Ma
     let autoRedirect = ssoRedirects.immediate === true;
     // XXX: This path matching is a bit brittle, but better to do it early instead of in the app code.
     const isWelcomeOrLanding =
-        window.location.hash === "#/welcome" || window.location.hash === "#" || window.location.hash === "";
+        window.location.hash === "#" || window.location.hash === "";
     const isLoginPage = window.location.hash === "#/login";
 
     if (!autoRedirect && ssoRedirects.on_welcome_page && isWelcomeOrLanding) {

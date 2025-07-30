@@ -37,7 +37,7 @@ export default class Welcome extends React.PureComponent<EmptyObject> {
             const brandingConfig = SdkConfig.getObject("branding");
             const logoUrl = brandingConfig?.get("auth_header_logo_url") ?? "themes/element/img/logos/element-logo.svg";
             replaceMap["$logoUrl"] = logoUrl;
-            pageUrl = "welcome.html";
+            // pageUrl = "welcome.html";
         }
 
         return (

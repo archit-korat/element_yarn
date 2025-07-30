@@ -142,11 +142,22 @@ import { ShareFormat, type SharePayload } from "../../dispatcher/payloads/ShareP
 import Markdown from "../../Markdown";
 import { sanitizeHtmlParams } from "../../Linkify";
 import StaticLogin from "./auth/StaticLogin";
+import logo from "../../../res/img/kampa.png";
 
 // legacy export
 export { default as Views } from "../../Views";
 
-const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "welcome", "static_login"];
+const SplashScreen = (): JSX.Element => (
+    <div className="w-full min-h-screen flex flex-col items-center justify-center">
+        <img src={logo} alt="Kumpa Logo" className="w-35 mb-4" />
+        <div className="text-xl md:text-xl font-bold text-center mb-2">République du Sénégal</div>
+        <p className="text-gray-700 text-center text-base md:text-sm">
+            La plateforme nationale d'échanges sécurisés
+        </p>
+    </div>
+)
+
+const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "static_login"];
 
 // Actions that are redirected through the onboarding process prior to being
 // re-dispatched. NOTE: some actions are non-trivial and would require
@@ -209,6 +220,7 @@ interface IState {
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props
+    showSplash: boolean;
 }
 
 export default class MatrixChat extends React.PureComponent<IProps, IState> {
@@ -255,6 +267,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             syncError: null, // If the current syncing status is ERROR, the error object, otherwise null.
             resizeNotifier: new ResizeNotifier(),
             ready: false,
+            showSplash: true
         };
 
         SdkConfig.put(this.props.config);
@@ -287,6 +300,19 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.subTitleStatus = "";
     }
 
+    private startSplashTimeout(): void {
+        // Hide splash after 2.5 seconds (2500ms)
+        setTimeout(() => {
+            this.setState({ showSplash: false });
+            if (!checkSessionLockFree()) {
+                // another instance holds the lock; confirm its theft before proceeding
+                this.setState({ view: Views.CONFIRM_LOCK_THEFT });
+            } else {
+                this.startInitSession();
+            }
+        }, 3000);
+    }
+
     /**
      * Kick off a call to {@link initSession}, and handle any errors
      */
@@ -310,6 +336,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
      *  * If all else fails, present a login screen.
      */
     private async initSession(): Promise<void> {
+
         // The Rust Crypto SDK will break if two Element instances try to use the same datastore at once, so
         // make sure we are the only Element instance in town (on this browser/domain).
         if (!(await getSessionLock(() => this.onSessionLockStolen()))) {
@@ -453,6 +480,34 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         super.setState<K>(state, callback);
     }
 
+    // public componentDidMount(): void {
+    //     UIStore.instance.on(UI_EVENTS.Resize, this.handleResize);
+
+    //     // For PersistentElement
+    //     this.state.resizeNotifier.on("middlePanelResized", this.dispatchTimelineResize);
+
+    //     RoomNotificationStateStore.instance.on(UPDATE_STATUS_INDICATOR, this.onUpdateStatusIndicator);
+
+    //     this.dispatcherRef = dis.register(this.onAction);
+
+    //     this.themeWatcher = new ThemeWatcher();
+    //     this.fontWatcher = new FontWatcher();
+    //     this.themeWatcher.start();
+    //     this.themeWatcher.on(ThemeWatcherEvent.Change, setTheme);
+    //     this.fontWatcher.start();
+
+    //     initSentry(SdkConfig.get("sentry"));
+
+    //     if (!checkSessionLockFree()) {
+    //         // another instance holds the lock; confirm its theft before proceeding
+    //         setTimeout(() => this.setState({ view: Views.CONFIRM_LOCK_THEFT }), 0);
+    //     } else {
+    //         this.startInitSession();
+    //     }
+
+    //     window.addEventListener("resize", this.onWindowResized);
+    // }
+
     public componentDidMount(): void {
         UIStore.instance.on(UI_EVENTS.Resize, this.handleResize);
 
@@ -471,12 +526,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         initSentry(SdkConfig.get("sentry"));
 
-        if (!checkSessionLockFree()) {
-            // another instance holds the lock; confirm its theft before proceeding
-            setTimeout(() => this.setState({ view: Views.CONFIRM_LOCK_THEFT }), 0);
-        } else {
-            this.startInitSession();
-        }
+        // Start splash timeout instead of directly starting init session
+        this.startSplashTimeout();
 
         window.addEventListener("resize", this.onWindowResized);
     }
@@ -557,14 +608,14 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             .then((loadedSession) => {
                 if (!loadedSession) {
                     // fall back to showing the welcome screen... unless we have a 3pid invite pending
-                    if (
-                        ThreepidInviteStore.instance.pickBestInvite() &&
-                        SettingsStore.getValue(UIFeature.Registration)
-                    ) {
-                        dis.dispatch({ action: "start_registration" });
-                    } else {
-                        dis.dispatch({ action: "view_welcome_page" });
-                    }
+                    // if (
+                    //     ThreepidInviteStore.instance.pickBestInvite() &&
+                    //     SettingsStore.getValue(UIFeature.Registration)
+                    // ) {
+                    dis.dispatch({ action: "start_registration" });
+                    // } else {
+                    //     dis.dispatch({ action: "view_welcome_page" });
+                    // }
                 }
                 return loadedSession;
             });
@@ -610,6 +661,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private onAction = (payload: ActionPayload): void => {
+
         // once the session lock has been stolen, don't try to do anything.
         if (this.state.view === Views.LOCK_STOLEN) {
             return;
@@ -801,9 +853,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewSomethingBehindModal();
                 break;
             }
-            case "view_welcome_page":
-                this.viewWelcome();
-                break;
+            // case "view_welcome_page":
+            //     this.viewWelcome();
+            //     break;
             case "start_static_login":
                 this.viewStaticLogin();
                 break;
@@ -965,16 +1017,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
     private async startRegistration(params: { [key: string]: string }, isMobileRegistration?: boolean): Promise<void> {
         // If registration is disabled or mobile registration is requested but not enabled in settings redirect to the welcome screen
+
         if (
             !SettingsStore.getValue(UIFeature.Registration) ||
             (isMobileRegistration && !SettingsStore.getValue("Registration.mobileRegistrationHelper"))
         ) {
-            this.showScreen("welcome");
+            this.showScreen("login");
             return;
         }
 
         const newState: Partial<IState> = {
-            view: Views.REGISTER,
+            view: Views.LOGIN,
         };
 
         if (isMobileRegistration && params.hs_url) {
@@ -1090,26 +1143,26 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private viewSomethingBehindModal(): void {
-        if (this.state.view !== Views.LOGGED_IN) {
-            this.viewWelcome();
-            return;
-        }
+        // if (this.state.view !== Views.LOGGED_IN) {
+        //     this.viewWelcome();
+        //     return;
+        // }
         if (!this.state.currentRoomId && !this.state.currentUserId) {
             this.viewHome();
         }
     }
 
-    private viewWelcome(): void {
-        if (shouldUseLoginForWelcome(SdkConfig.get())) {
-            return this.viewLogin();
-        }
-        this.setStateForNewView({
-            view: Views.WELCOME,
-        });
-        this.notifyNewScreen("welcome");
-        ThemeController.isLogin = true;
-        this.themeWatcher?.recheck();
-    }
+    // private viewWelcome(): void {
+    //     if (shouldUseLoginForWelcome(SdkConfig.get())) {
+    //         return this.viewLogin();
+    //     }
+    //     this.setStateForNewView({
+    //         view: Views.WELCOME,
+    //     });
+    //     this.notifyNewScreen("welcome");
+    //     ThemeController.isLogin = true;
+    //     this.themeWatcher?.recheck();
+    // }
 
     private viewLogin(otherState?: any): void {
         this.setStateForNewView({
@@ -1874,11 +1927,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         } else if (screen === "settings") {
             dis.fire(Action.ViewUserSettings);
-        } else if (screen === "welcome") {
-            dis.dispatch({
-                action: "view_welcome_page",
-            });
-        } else if (screen === "home") {
+        }
+        // else if (screen === "welcome") {
+        //     dis.dispatch({
+        //         action: "view_welcome_page",
+        //     });
+        // } 
+        else if (screen === "home") {
             dis.dispatch({
                 action: Action.ViewHomePage,
             });
@@ -1979,11 +2034,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 subAction: params?.action,
             });
         }
-         else if (screen === 'home/login_after') {
+        else if (screen === 'home/login_after') {
             dis.dispatch({
                 action: Action.LoginAfter
             })
-        } 
+        }
         else if (screen === 'home/static_splace_screen') {
             dis.dispatch({
                 action: Action.StaticSplaceScreen
@@ -2148,7 +2203,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (
             initialScreenAfterLogin &&
             // XXX: workaround for https://github.com/vector-im/element-web/issues/11643 causing a login-loop
-            !["welcome", "login", "register", "start_sso", "start_cas", "static_login"].includes(initialScreenAfterLogin.screen)
+            !["login", "register", "start_sso", "start_cas", "static_login"].includes(initialScreenAfterLogin.screen)
         ) {
             fragmentAfterLogin = `/${initialScreenAfterLogin.screen}`;
         }
@@ -2156,6 +2211,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     public render(): React.ReactNode {
+
+        if (this.state.showSplash) {
+            return <SplashScreen />;
+        }
+
         const fragmentAfterLogin = this.getFragmentAfterLogin();
         let view: JSX.Element;
 
@@ -2207,9 +2267,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     />
                 );
             }
-        } else if (this.state.view === Views.WELCOME) {
-            view = <Welcome />;
-        } else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
+        }
+        // else if (this.state.view === Views.WELCOME) {
+        //     view = <Welcome />;
+        // } 
+        else if (this.state.view === Views.REGISTER && SettingsStore.getValue(UIFeature.Registration)) {
             const email = ThreepidInviteStore.instance.pickBestInvite()?.toEmail;
             view = (
                 <Registration

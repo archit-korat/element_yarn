@@ -61,7 +61,7 @@ const whitelistedScreens = new Set([
     "soft_logout",
     "new",
     "settings",
-    "welcome",
+    // "welcome",
     "home",
     "start",
     "directory",

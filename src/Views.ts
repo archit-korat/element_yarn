@@ -16,7 +16,7 @@ enum Views {
     CONFIRM_LOCK_THEFT,
 
     // we are showing the welcome view
-    WELCOME,
+    // WELCOME,
 
     // we are showing the login view
     LOGIN,

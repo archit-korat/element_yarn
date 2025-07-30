@@ -8,12 +8,19 @@ Please see LICENSE files in the repository root for full details.
 */
 
 .mx_CompleteSecurityBody {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
     color: $authpage-primary-color;
     background-color: $background;
     border-radius: 4px;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
 
     h2 {
         font-size: $font-24px;

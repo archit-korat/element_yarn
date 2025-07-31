@@ -735,6 +735,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const hashPath = window.location.hash.substring(1);
         return (
+            
             // <MatrixClientContextProvider client={this._matrixClient}>
             //     <div
             //         onPaste={this.onPaste}
@@ -774,7 +775,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             //     {audioFeedArraysForCalls}
             // </MatrixClientContextProvider>
             <>
-                {hashPath === '/home/login_after' || hashPath === '/home/static_splace_screen' ? (
+                {/* {hashPath === '/home/login_after' || hashPath === '/home/static_splace_screen' ? (
                     <MatrixClientContextProvider client={this._matrixClient}>
                         <div
                             onPaste={this.onPaste}
@@ -806,7 +807,9 @@ class LoggedInView extends React.Component<IProps, IState> {
                         </div>
                     </MatrixClientContextProvider>
                 ) : (
-                    <MatrixClientContextProvider client={this._matrixClient}>
+                 
+                )} */}
+                   <MatrixClientContextProvider client={this._matrixClient}>
                         <div
                             onPaste={this.onPaste}
                             onKeyDown={this.onReactKeyDown}
@@ -844,7 +847,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                         <NonUrgentToastContainer />
                         {audioFeedArraysForCalls}
                     </MatrixClientContextProvider>
-                )}
             </>
         );
     }

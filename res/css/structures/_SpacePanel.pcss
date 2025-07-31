@@ -409,7 +409,65 @@ Please see LICENSE files in the repository root for full details.
         margin-top: var(--cpd-space-4x);
         border-bottom: none;
     }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 35px;
+    padding:16px;
+
+.mx_SpacePanel_top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    
 }
+
+.mx_SpacePanel_logo {
+    width: 60px;
+    height: auto;
+}
+
+.mx_SpacePanel_menu {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    list-style: none;
+}
+
+.mx_SpacePanel_menuItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #444;
+    cursor: pointer;
+    gap: 2px;
+}
+
+.mx_SpacePanel_menuItem.selected {
+    color: #2e7d5a; /* active color */
+}
+
+.mx_SpacePanel_bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.mx_SpacePanel_menuItem:hover svg {
+    color: #39785A;
+}
+.mx_SpacePanel_menuLabel:hover {
+        color: #39785A;
+   font-size: $font-10px;
+   font-weight: var(--cpd-font-weight-semibold);
+}
+}
+
+
+
 
 .mx_SpacePanel_contextMenu {
     max-width: 360px;
@@ -482,3 +540,4 @@ Please see LICENSE files in the repository root for full details.
         text-transform: capitalize;
     }
 }
+

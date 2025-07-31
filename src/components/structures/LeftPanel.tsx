@@ -38,6 +38,8 @@ import type PageType from "../../PageTypes";
 import { Landmark, LandmarkNavigation } from "../../accessibility/LandmarkNavigation";
 import SettingsStore from "../../settings/SettingsStore";
 import { RoomListPanel } from "../views/rooms/RoomListPanel";
+import QuickSettingsButton from "../views/spaces/QuickSettingsButton";
+import { SlSettings } from "react-icons/sl";
 
 interface IProps {
     isMinimized: boolean;
@@ -363,18 +365,33 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
 
         return (
-            <div
-                className="mx_LeftPanel_filterContainer"
-                onFocus={this.onFocus}
-                onBlur={this.onBlur}
-                onKeyDown={this.onKeyDown}
-                role="search"
-            >
-                <RoomSearch isMinimized={this.props.isMinimized} />
+            <div className="sidebar-content">
+                <div className="nav-item">
+                    <QuickSettingsButton isPanelCollapsed={true} />
+                </div>
 
-                {dialPadButton}
-                {rightButton}
+                <div className="user-section">
+                    <img
+                        src={require("../../../res/img/dummyUserPic.png")}
+                        className="user-pic"
+                        alt="User Image"
+                    />
+                    <div className="user-name">Abdoulaye Fall</div>
+                </div>
             </div>
+
+            // <div
+            //     className="mx_LeftPanel_filterContainer"
+            //     onFocus={this.onFocus}
+            //     onBlur={this.onBlur}
+            //     onKeyDown={this.onKeyDown}
+            //     role="search"
+            // >
+            //     <RoomSearch isMinimized={this.props.isMinimized} />
+
+            //     {dialPadButton}
+            //     {rightButton}
+            // </div>
         );
     }
 

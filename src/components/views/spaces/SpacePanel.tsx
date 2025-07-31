@@ -68,6 +68,9 @@ import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
 import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 import { KeyboardShortcut } from "../settings/KeyboardShortcut";
+import { AiOutlineMessage } from "react-icons/ai";
+import { FaRegShareFromSquare } from "react-icons/fa6";
+import { LiaEdit } from "react-icons/lia";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -238,9 +241,9 @@ const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed"
     const onNewClick = menuDisplayed
         ? closeMenu
         : () => {
-              if (!isPanelCollapsed) setPanelCollapsed(true);
-              openMenu();
-          };
+            if (!isPanelCollapsed) setPanelCollapsed(true);
+            openMenu();
+        };
 
     return (
         <li
@@ -304,8 +307,8 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
                 style={
                     isDraggingOver
                         ? {
-                              pointerEvents: "none",
-                          }
+                            pointerEvents: "none",
+                        }
                         : undefined
                 }
                 element="ul"
@@ -348,6 +351,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
     },
 );
 
+// ... existing code ...
 const SpacePanel: React.FC = () => {
     const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
@@ -379,60 +383,33 @@ const SpacePanel: React.FC = () => {
                         onDragEndHandler();
                     }}
                 >
-                    <nav
-                        className={classNames("mx_SpacePanel", {
-                            collapsed: isPanelCollapsed,
-                            newUi: newRoomListEnabled,
-                        })}
-                        onKeyDown={(ev) => {
-                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
-                            if (
-                                navAction === KeyBindingAction.NextLandmark ||
-                                navAction === KeyBindingAction.PreviousLandmark
-                            ) {
-                                LandmarkNavigation.findAndFocusNextLandmark(
-                                    Landmark.ACTIVE_SPACE_BUTTON,
-                                    navAction === KeyBindingAction.PreviousLandmark,
-                                );
-                                ev.stopPropagation();
-                                ev.preventDefault();
-                                return;
-                            }
-                            onKeyDownHandler(ev);
-                        }}
-                        ref={ref}
-                        aria-label={_t("common|spaces")}
-                    >
-                        <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                            <AccessibleButton
-                                className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
-                                onClick={() => setPanelCollapsed(!isPanelCollapsed)}
-                                title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                caption={
-                                    <KeyboardShortcut
-                                        value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
-                                        className="mx_SpacePanel_Tooltip_KeyboardShortcut"
-                                    />
-                                }
-                            />
-                        </UserMenu>
-                        <Droppable droppableId="top-level-spaces">
-                            {(provided, snapshot) => (
-                                <InnerSpacePanel
-                                    {...provided.droppableProps}
-                                    isPanelCollapsed={isPanelCollapsed}
-                                    setPanelCollapsed={setPanelCollapsed}
-                                    isDraggingOver={snapshot.isDraggingOver}
-                                    innerRef={provided.innerRef}
-                                >
-                                    {provided.placeholder}
-                                </InnerSpacePanel>
-                            )}
-                        </Droppable>
+                    <nav className="mx_SpacePanel">
+                        {/* Top: Logo */}
+                        <div className="mx_SpacePanel_top">
+                            <img src={require('../../../../res/img/logo.png')} alt="Kumpa Logo" className="mx_SpacePanel_logo" />
+                        </div>
 
-                        <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
+                        {/* Middle: Menu Items */}
+                        <ul className="mx_SpacePanel_menu">
+                            <li className="mx_SpacePanel_menuItem">
+                                <AiOutlineMessage size={25} />
+                                <span className="mx_SpacePanel_menuLabel mx_SpacePanel_menuLabel--active">Chat</span>
+                            </li>
+                            <li className="mx_SpacePanel_menuItem">
+                                <FaRegShareFromSquare size={25} />
+                                <span className="mx_SpacePanel_menuLabel">Inviter</span>
+                            </li>
+                            <li className="mx_SpacePanel_menuItem">
+                                <LiaEdit size={25} />
+                                <span className="mx_SpacePanel_menuLabel">Créer</span>
+                            </li>
+                        </ul>
 
-                        <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+                        {/* Bottom: QuickSettings and UserMenu */}
+                        <div className="mx_SpacePanel_bottom">
+                            <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
+                            <UserMenu isPanelCollapsed={isPanelCollapsed} />
+                        </div>
                     </nav>
                 </DragDropContext>
             )}

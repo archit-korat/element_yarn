@@ -21,6 +21,7 @@ Please see LICENSE files in the repository root for full details.
     position: relative;
     /* Fix for the blurred avatar-background */
     z-index: 1;
+    width: 100px;
 
     /* Create another flexbox so the Panel fills the container */
     display: flex;
@@ -391,11 +392,11 @@ Please see LICENSE files in the repository root for full details.
     }
 
     .mx_UserMenu {
-        padding-bottom: 12px;
+        /* padding-bottom: 12px;
         border-bottom: 1px solid $separator;
         margin: 12px 14px 4px 18px;
         width: min-content;
-        max-width: 226px;
+        max-width: 226px; */
 
         /* Display the container and img here as block elements so they don't take
          * up extra vertical space.
@@ -415,6 +416,7 @@ Please see LICENSE files in the repository root for full details.
     justify-content: space-between;
     gap: 35px;
     padding:16px;
+    overflow-y: auto;
 
 .mx_SpacePanel_top {
     display: flex;
@@ -453,16 +455,13 @@ Please see LICENSE files in the repository root for full details.
 .mx_SpacePanel_bottom {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: auto;
 }
-.mx_SpacePanel_menuItem:hover svg {
+.mx_SpacePanel_menuItem:hover {
     color: #39785A;
-}
-.mx_SpacePanel_menuLabel:hover {
-        color: #39785A;
-   font-size: $font-10px;
-   font-weight: var(--cpd-font-weight-semibold);
 }
 }
 

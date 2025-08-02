@@ -40,6 +40,7 @@ import SettingsStore from "../../settings/SettingsStore";
 import { RoomListPanel } from "../views/rooms/RoomListPanel";
 import QuickSettingsButton from "../views/spaces/QuickSettingsButton";
 import { SlSettings } from "react-icons/sl";
+import { FaChevronLeft } from "react-icons/fa6";
 
 interface IProps {
     isMinimized: boolean;
@@ -431,7 +432,29 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         return (
             <div className={containerClasses}>
                 <div className="mx_LeftPanel_roomListContainer">
-                    {shouldShowComponent(UIComponent.FilterContainer) && this.renderSearchDialExplore()}
+                    <div className="sidebar-content">
+                        <div className="chat-header">
+                            <div className="chat-header-inner">
+                                <div className="chat-header-left">
+                                    <button className="back-button">
+                                        <FaChevronLeft />
+                                    </button>
+                                    <p className="chat-title">Chat</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="nav-item">
+                            <QuickSettingsButton isPanelCollapsed={true} />
+                        </div>
+                        <div className="user-section">
+                            <img
+                                src={require("../../../res/img/dummyUserPic.png")}
+                                className="user-pic"
+                                alt="User Image"
+                            />
+                            <div className="user-name">Abdoulaye Fall</div>
+                        </div>
+                    </div>
                     {this.renderBreadcrumbs()}
                     {!this.props.isMinimized && <LegacyRoomListHeader onVisibilityChange={this.refreshStickyHeaders} />}
                     <nav className="mx_LeftPanel_roomListWrapper" aria-label={_t("common|rooms")}>

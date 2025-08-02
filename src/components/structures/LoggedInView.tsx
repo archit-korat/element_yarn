@@ -735,7 +735,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const hashPath = window.location.hash.substring(1);
         return (
-            
+
             // <MatrixClientContextProvider client={this._matrixClient}>
             //     <div
             //         onPaste={this.onPaste}
@@ -809,44 +809,44 @@ class LoggedInView extends React.Component<IProps, IState> {
                 ) : (
                  
                 )} */}
-                   <MatrixClientContextProvider client={this._matrixClient}>
-                        <div
-                            onPaste={this.onPaste}
-                            onKeyDown={this.onReactKeyDown}
-                            className={wrapperClasses}
-                            aria-hidden={this.props.hideToSRUsers}
-                        >
-                            <ToastContainer />
-                            <div className={bodyClasses}>
-                                <div className="mx_LeftPanel_outerWrapper">
-                                    <LeftPanelLiveShareWarning isMinimized={shouldUseMinimizedUI || false} />
-                                    <div className={leftPanelWrapperClasses}>
-                                        {!useNewRoomList && (
-                                            <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
-                                        )}
-                                        <SpacePanel />
-                                        {!useNewRoomList && <BackdropPanel backgroundImage={this.state.backgroundImage} />}
-                                        <div
-                                            className="mx_LeftPanel_wrapper--user"
-                                            ref={this._resizeContainer}
-                                            data-collapsed={shouldUseMinimizedUI ? true : undefined}
-                                        >
-                                            <LeftPanel
-                                                pageType={this.props.page_type as PageTypes}
-                                                isMinimized={shouldUseMinimizedUI || false}
-                                                resizeNotifier={this.props.resizeNotifier}
-                                            />
-                                        </div>
-                                    </div>
+                <MatrixClientContextProvider client={this._matrixClient}>
+                    <div
+                        onPaste={this.onPaste}
+                        onKeyDown={this.onReactKeyDown}
+                        className={wrapperClasses}
+                        aria-hidden={this.props.hideToSRUsers}
+                    >
+                        <ToastContainer />
+                        <div className={bodyClasses}>
+                            <div className="mx_LeftPanel_outerWrapper">
+                                <LeftPanelLiveShareWarning isMinimized={shouldUseMinimizedUI || false} />
+                                <div className={leftPanelWrapperClasses}>
+                                    {!useNewRoomList && (
+                                        <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
+                                    )}
+                                    <SpacePanel />
+                                    {!useNewRoomList && <BackdropPanel backgroundImage={this.state.backgroundImage} />}
+                                    {/* <div
+                                        className="mx_LeftPanel_wrapper--user"
+                                        ref={this._resizeContainer}
+                                        data-collapsed={shouldUseMinimizedUI ? true : undefined}
+                                    >
+                                    </div> */}
                                 </div>
-                                <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
-                                <div className="mx_RoomView_wrapper">{pageElement}</div>
                             </div>
+                            <LeftPanel
+                                pageType={this.props.page_type as PageTypes}
+                                isMinimized={shouldUseMinimizedUI || false}
+                                resizeNotifier={this.props.resizeNotifier}
+                            />
+                            {/* <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" /> */}
+                            <div className="mx_RoomView_wrapper">{pageElement}</div>
                         </div>
-                        <PipContainer />
-                        <NonUrgentToastContainer />
-                        {audioFeedArraysForCalls}
-                    </MatrixClientContextProvider>
+                    </div>
+                    <PipContainer />
+                    <NonUrgentToastContainer />
+                    {audioFeedArraysForCalls}
+                </MatrixClientContextProvider>
             </>
         );
     }

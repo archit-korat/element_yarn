@@ -104,3 +104,202 @@ Please see LICENSE files in the repository root for full details.
 .mx_RoomSummaryCard_bottomOptions {
     margin: 0 0 var(--cpd-space-8x);
 }
+
+.mx_RoomSummaryCard_mediaSection {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding:35px
+}
+
+.mx_RoomSummaryCard_mediaStats {
+    display: flex;
+    gap: 1rem;
+}
+.mx_statCard {
+    flex: 1;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.mx_statCard--blue {
+    background-color: #19AFD829;
+    color: #004e66;
+}
+
+.mx_statCard--gray {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.mx_statCard_content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mx_statIcon {
+    font-size: 20px;
+}
+.mx_RoomSummaryCard_mediaBox {
+    flex: 1;
+    background-color: var(--cpd-color-bg-subtle);
+    padding: 1rem;
+    border-radius: var(--cpd-radius-md);
+    text-align: center;
+}
+
+.mx_RoomSummaryCard_mediaTypes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mx_icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+.mx_icon--blue { background-color: #d1e9ff; }
+.mx_icon--green { background-color: #d1ffd6; }
+.mx_icon--yellow { background-color: #fff7cc; }
+.mx_icon--red { background-color: #ffd6d6; }
+
+.mx_count {
+    margin-left: auto;
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_RoomSummaryCard_recentFiles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mx_RoomSummaryCard_recentFileList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mx_RoomSummaryCard_recentFileItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--cpd-color-border-subtle);
+}
+
+.mx_fileIcon {
+    width: 32px;
+    height: 32px;
+    background-color: var(--cpd-color-bg-subtle, #e5e7eb);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cpd-color-icon-file, #A1A1A1);
+}
+
+
+
+.mx_fileDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+}
+
+.mx_fileTimestamp {
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_viewAll {
+    color: var(--cpd-color-text-secondary);
+    cursor: pointer;
+}
+
+.mx_RoomSummaryCard_mediaHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mx_iconCircle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+.theme-dark .mx_iconCircle {
+    background-color: #2a2a2a;
+    color: #f1f1f1;
+}
+
+.mx_divider {
+    border: none;
+    border-bottom: 1px solid var(--cpd-color-border-subtle, #e5e7eb);
+    margin: 0.25rem 0 0.5rem;
+}
+.mx_RoomSummaryCard_mediaTypeRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+}
+
+.mx_typeIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.mx_typeIcon--blue { background-color: #DAF2F9; color: #65CDEB; }
+.mx_typeIcon--green { background-color: #DEF6D9; color: #6BD154; }
+.mx_typeIcon--yellow { background-color: #FFD84B4D; color: #FFD84B; }
+.mx_typeIcon--red { background-color: #FF4B4B4D; color: #FF4B4B; }
+
+.mx_typeText {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.mx_typeCount {
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_typeArrow {
+    font-size: 16px;
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_RoomSummaryCard_mediaTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mx_moreIcon {
+    font-size: 18px;
+    color: var(--cpd-color-text-secondary);
+    cursor: pointer;
+}

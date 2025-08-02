@@ -256,7 +256,9 @@ export default class RightPanel extends React.Component<Props, IState> {
                 if (!!this.props.room) {
                     card = (
                         <RoomSummaryCardView
+                            phase={phase}
                             room={this.props.room}
+                            
                             // whenever RightPanel is passed a room it is passed a permalinkcreator
                             permalinkCreator={this.props.permalinkCreator!}
                             onSearchChange={this.props.onSearchChange}

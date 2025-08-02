@@ -148,13 +148,14 @@ import logo from "../../../res/img/kampa.png";
 export { default as Views } from "../../Views";
 
 const SplashScreen = (): JSX.Element => (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center">
-        <img src={logo} alt="Kumpa Logo" className="w-35 mb-4" />
-        <div className="text-xl md:text-xl font-bold text-center mb-2">République du Sénégal</div>
-        <p className="text-gray-700 text-center text-base md:text-sm">
+    <div className="mx_KumpaSplash">
+        <img src={logo} alt="Kumpa Logo" className="mx_KumpaSplash_logo" />
+        <div className="mx_KumpaSplash_title">République du Sénégal</div>
+        <p className="mx_KumpaSplash_description">
             La plateforme nationale d'échanges sécurisés
         </p>
     </div>
+
 )
 
 const AUTH_SCREENS = ["register", "mobile_register", "login", "forgot_password", "start_sso", "start_cas", "static_login"];

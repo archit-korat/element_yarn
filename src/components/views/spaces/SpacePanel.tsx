@@ -71,6 +71,7 @@ import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 import { AiOutlineMessage } from "react-icons/ai";
 import { FaRegShareFromSquare } from "react-icons/fa6";
 import { LiaEdit } from "react-icons/lia";
+import { Link } from "@vector-im/compound-web";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -355,6 +356,7 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
 const SpacePanel: React.FC = () => {
     const [dragging, setDragging] = useState(false);
     const [isPanelCollapsed, setPanelCollapsed] = useState(true);
+
     const ref = useRef<HTMLDivElement>(null);
     useLayoutEffect(() => {
         if (ref.current) UIStore.instance.trackElementDimensions("SpacePanel", ref.current);
@@ -368,6 +370,8 @@ const SpacePanel: React.FC = () => {
     });
 
     const newRoomListEnabled = useSettingValue("feature_new_room_list");
+
+    const hashPath = window.location.hash.substring(1);
 
     return (
         <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
@@ -391,19 +395,34 @@ const SpacePanel: React.FC = () => {
 
                         {/* Middle: Menu Items */}
                         <ul className="mx_SpacePanel_menu">
-                            <li className="mx_SpacePanel_menuItem">
+                            <Link href="#/home"
+                                className={classNames("mx_SpacePanel_menuItem", {
+                                    "mx_SpacePanel_menuItem--active": hashPath === "/home",
+                                })}
+                            >
                                 <AiOutlineMessage size={25} />
-                                <span className="mx_SpacePanel_menuLabel mx_SpacePanel_menuLabel--active">Chat</span>
-                            </li>
-                            <li className="mx_SpacePanel_menuItem">
+                                <span className="mx_SpacePanel_menuLabel">Chat</span>
+                            </Link>
+
+                            <Link href="#/home/invite"
+                                className={classNames("mx_SpacePanel_menuItem", {
+                                    "mx_SpacePanel_menuItem--active": hashPath === "home/invite",
+                                })}
+                            >
                                 <FaRegShareFromSquare size={25} />
                                 <span className="mx_SpacePanel_menuLabel">Inviter</span>
-                            </li>
-                            <li className="mx_SpacePanel_menuItem">
+                            </Link>
+
+                            <Link href="#/home/creer"
+                                className={classNames("mx_SpacePanel_menuItem", {
+                                    "mx_SpacePanel_menuItem--active": hashPath === "/home/creer",
+                                })}
+                            >
                                 <LiaEdit size={25} />
                                 <span className="mx_SpacePanel_menuLabel">Créer</span>
-                            </li>
+                            </Link>
                         </ul>
+
 
                         {/* Bottom: QuickSettings and UserMenu */}
                         <div className="mx_SpacePanel_bottom">

@@ -446,6 +446,18 @@ Please see LICENSE files in the repository root for full details.
     color: #444;
     cursor: pointer;
     gap: 2px;
+
+    &:hover{
+        background: none;
+    }
+
+    &:focus{
+        background: none;
+    }
+
+    &:active{
+        background: none;
+    }
 }
 
 .mx_SpacePanel_menuItem.selected {
@@ -463,6 +475,15 @@ Please see LICENSE files in the repository root for full details.
 .mx_SpacePanel_menuItem:hover {
     color: #39785A;
 }
+/* Stronger selector */
+.mx_SpacePanel_menuItem--active .mx_SpacePanel_menuLabel {
+    color: #39785A;
+}
+
+.mx_SpacePanel_menuItem--active svg {
+    color: #39785A;
+}
+
 }
 
 

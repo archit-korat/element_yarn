@@ -40,7 +40,10 @@ import SettingsStore from "../../settings/SettingsStore";
 import { RoomListPanel } from "../views/rooms/RoomListPanel";
 import QuickSettingsButton from "../views/spaces/QuickSettingsButton";
 import { SlSettings } from "react-icons/sl";
-import { FaChevronLeft } from "react-icons/fa6";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
+import { IoIosArrowDown } from "react-icons/io";
+import { HiOutlineSearch } from "react-icons/hi";
+import UserMenu from "./UserMenu";
 
 interface IProps {
     isMinimized: boolean;
@@ -57,6 +60,7 @@ interface IState {
     showBreadcrumbs: BreadcrumbsMode;
     activeSpace: SpaceKey;
     supportsPstnProtocol: boolean;
+    isMinimized: boolean;
 }
 
 export default class LeftPanel extends React.Component<IProps, IState> {
@@ -72,6 +76,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             activeSpace: SpaceStore.instance.activeSpace,
             showBreadcrumbs: LeftPanel.breadcrumbsMode,
             supportsPstnProtocol: LegacyCallHandler.instance.getSupportsPstnProtocol(),
+            isMinimized: this.props.isMinimized || false,
         };
     }
 
@@ -79,7 +84,18 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         return !BreadcrumbsStore.instance.visible ? BreadcrumbsMode.Disabled : BreadcrumbsMode.Legacy;
     }
 
+    private onWindowResized = (): void => {
+        if (window.innerWidth < 768) {
+            this.setState({ isMinimized: true });
+        } else {
+            this.setState({ isMinimized: this.props.isMinimized });
+        }
+    };
+
     public componentDidMount(): void {
+
+        window.addEventListener("resize", this.onWindowResized);
+
         BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
@@ -95,6 +111,9 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
+
+        window.removeEventListener("resize", this.onWindowResized);
+
         BreadcrumbsStore.instance.off(UPDATE_EVENT, this.onBreadcrumbsUpdate);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
@@ -396,12 +415,18 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         );
     }
 
+    // toggleMinimize = () => {
+    //     this.setState(prevState => ({
+    //         isMinimized: !prevState.isMinimized,
+    //     }));
+    // };
+
     public render(): React.ReactNode {
         const useNewRoomList = SettingsStore.getValue("feature_new_room_list");
         const containerClasses = classNames({
             mx_LeftPanel: true,
             mx_LeftPanel_newRoomList: useNewRoomList,
-            mx_LeftPanel_minimized: this.props.isMinimized,
+            mx_LeftPanel_minimized: this.state.isMinimized,
         });
 
         const roomListClasses = classNames("mx_LeftPanel_actualRoomListContainer", "mx_AutoHideScrollbar");
@@ -421,7 +446,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 resizeNotifier={this.props.resizeNotifier}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
-                isMinimized={this.props.isMinimized}
+                isMinimized={this.state.isMinimized}
                 activeSpace={this.state.activeSpace}
                 onResize={this.refreshStickyHeaders}
                 onListCollapse={this.refreshStickyHeaders}
@@ -435,28 +460,64 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     <div className="sidebar-content">
                         <div className="chat-header">
                             <div className="chat-header-inner">
-                                <div className="chat-header-left">
-                                    <button className="back-button">
-                                        <FaChevronLeft />
+                                <div className={`${this.state.isMinimized ? 'chat-header-minimized' : 'chat-header-left'}`}>
+                                    <button className="back-button" onClick={() => {
+                                        this.setState(prevState => ({
+                                            isMinimized: !prevState.isMinimized,
+                                        }))
+                                    }}
+                                    >
+                                        {this.state.isMinimized ? <FaChevronRight /> : <FaChevronLeft />}
                                     </button>
-                                    <p className="chat-title">Chat</p>
+                                    {!this.state.isMinimized && <p className="chat-title">Chat</p>}
                                 </div>
                             </div>
                         </div>
-                        <div className="nav-item">
+                        <div className={`nav-item ${this.state.isMinimized ? "nav-item-minimized" : ""}`}>
                             <QuickSettingsButton isPanelCollapsed={true} />
                         </div>
                         <div className="user-section">
-                            <img
+                            {/* <img
                                 src={require("../../../res/img/dummyUserPic.png")}
                                 className="user-pic"
                                 alt="User Image"
-                            />
-                            <div className="user-name">Abdoulaye Fall</div>
+                            /> */}
+                            <UserMenu isPanelCollapsed={false} />
+                            {/* <div className="user-name">Abdoulaye Fall</div> */}
+                            {
+                                this.state.isMinimized ?
+                                    <button className="collapsed-select-btn" onClick={() => this.setState({ isMinimized: false })}>
+                                        <IoIosArrowDown />
+                                    </button>
+                                    :
+                                    <div className="custom-select-wrapper">
+                                        <select className="custom-select">
+                                            <option>Disponible</option>
+                                        </select>
+                                        <IoIosArrowDown className="select-arrow" />
+                                    </div>
+                            }
+                            {
+                                this.state.isMinimized ?
+                                    <button className="collapsed-search-btn" onClick={() => this.setState({ isMinimized: false })}>
+                                        <HiOutlineSearch />
+                                    </button> :
+                                    <div className="search-container">
+                                        <div className="search-wrapper">
+                                            <input
+                                                placeholder="Rechercher..."
+                                                className="search-input"
+                                            />
+                                            <button className="search-button">
+                                                <HiOutlineSearch fontSize={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                            }
                         </div>
                     </div>
-                    {this.renderBreadcrumbs()}
-                    {!this.props.isMinimized && <LegacyRoomListHeader onVisibilityChange={this.refreshStickyHeaders} />}
+                    {/* {this.renderBreadcrumbs()} */}
+                    {/* {!this.props.isMinimized && <LegacyRoomListHeader onVisibilityChange={this.refreshStickyHeaders} />} */}
                     <nav className="mx_LeftPanel_roomListWrapper" aria-label={_t("common|rooms")}>
                         <div
                             className={roomListClasses}

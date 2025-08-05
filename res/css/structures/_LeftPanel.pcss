@@ -222,6 +222,8 @@ Please see LICENSE files in the repository root for full details.
         flex-grow: 0;
         min-width: unset;
         width: unset !important;
+        padding-inline: 8px;
+        left: 0;
 
         .mx_LeftPanel_roomListContainer {
             width: var(--collapsedWidth);
@@ -301,6 +303,13 @@ Please see LICENSE files in the repository root for full details.
       gap: 0.75rem;
     }
 
+    .chat-header-minimized{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-inline: auto;
+    }
+
     .back-button {
       padding: 8px;
       border-radius: 9999px;
@@ -323,6 +332,11 @@ Please see LICENSE files in the repository root for full details.
   justify-content: flex-end;
   align-items: flex-start;
   cursor: pointer;
+
+  &.nav-item-minimized{
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .nav-item:hover {
@@ -353,10 +367,173 @@ Please see LICENSE files in the repository root for full details.
   }
 }
 
-/* User Name */
-.user-name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #ffffff;
+@media (max-width: 768px) {
+  .mx_LeftPanel {
+    width: 50% !important; // Make sure it overrides other widths
+    position: fixed;       // Take it out of normal flow
+    z-index: 100;          // Appear above other content        
+    left: 68px;
+    top: 0;
+    height: 100%;
+    transition: all 0.3s ease-in-out;
+    background-color: $roomlist-bg-color !important;
+  }
+
+  .mx_LeftPanel.mx_LeftPanel_minimized {
+    left: 68px;
+    width: 80px !important;
+    background-color: $roomlist-bg-color !important;
+  }
 }
 
+/* User Name */
+.user-name {
+  font-size: 0.8rem;
+  color: $secondary-content;
+  text-align: center;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  width: fit-content;
+  display: inline-block;
+}
+
+.collapsed-select-btn{
+  background-color: rgba(51, 196, 19, 0.16);
+  color: var(--cpd-color-yellow-1300);
+  font-size: 1rem;
+  border-radius: 8px;
+  height: 32px;
+  width: 32px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.collapsed-search-btn{
+  background-color: var(--cpd-color-alpha-gray-300);
+  color: var(--cpd-color-icon-secondary);
+  font-size: 1rem;
+  border-radius: 8px;
+  height: 32px;
+  width: 32px;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.custom-select {
+  background-color: rgba(51, 196, 19, 0.16); /* #33C41329 */
+  padding: 6px 32px 6px 12px; /* Add right padding for the arrow */
+  border-radius: 8px;
+  font-weight: normal;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  border: none;
+  font-size: 0.8rem;
+  color: var(--cpd-color-yellow-1300);
+}
+
+/* Arrow inside the select */
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 0.8rem;
+  color: var(--cpd-color-yellow-1300);
+}
+
+.search-container {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 32px 8px 12px; /* space for the icon */
+  border-radius: 8px;
+  background-color: rgba(199, 199, 199, 0.16); /* #C7C7C729 */
+  color: $secondary-content;
+  outline: none;
+  border: none;
+  font-size: 14px;
+}
+
+.search-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: $secondary-content;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mx_UserMenu_contextMenuButton {
+  flex-direction: column;
+}
+
+.user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_name {
+  font-size: 0.8rem;
+  color: $secondary-content;
+  text-align: center;
+  margin-left: 0;
+}
+
+.user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_userAvatar {
+  position: relative; /* Required for positioning the green dot */
+}
+
+/* Green Dot */
+.user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_userAvatar::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.mx_LeftPanel.mx_LeftPanel_minimized .user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_userAvatar {
+  position: relative; /* Required for positioning the green dot */
+}
+
+.mx_LeftPanel.mx_LeftPanel_minimized .user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_userAvatar::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  height: 10px;
+  width: 10px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_userAvatar .mx_UserMenu_userAvatar_BaseAvatar {
+  --cpd-avatar-size: 80px !important;
+}
+
+.mx_LeftPanel.mx_LeftPanel_minimized .user-section .mx_UserMenu_contextMenuButton .mx_UserMenu_userAvatar .mx_UserMenu_userAvatar_BaseAvatar {
+  --cpd-avatar-size: 100% !important;
+}

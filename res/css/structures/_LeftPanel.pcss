@@ -6,6 +6,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+:root{
+  --cpd-toggle-chatpanel-icon-bg-color: #E1E6EC;
+}
+
 .mx_MatrixChat--with-avatar {
     .mx_LeftPanel,
     .mx_LeftPanel .mx_LeftPanel_roomListContainer {
@@ -52,6 +56,7 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_LeftPanel {
+    /* box-shadow: var(--cpd-left-shadow) !important; */
     background-color: $roomlist-bg-color;
 
     /* Create a row-based flexbox for the space panel and the room list */
@@ -313,7 +318,7 @@ Please see LICENSE files in the repository root for full details.
     .back-button {
       padding: 8px;
       border-radius: 9999px;
-      background-color: $quinary-content;
+      background-color: var(--cpd-toggle-chatpanel-icon-bg-color);
       color: var(--cpd-color-icon-secondary);
       cursor: pointer;
       border: none;

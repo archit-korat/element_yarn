@@ -359,7 +359,7 @@ import { Flex } from "../../../shared-components/utils/Flex";
 import { Linkify, topicToHtml } from "../../../HtmlUtils.tsx";
 import { useRoomSummaryCardViewModel } from "../../viewmodels/right_panel/RoomSummaryCardViewModel.tsx";
 import { useRoomTopicViewModel } from "../../viewmodels/right_panel/RoomSummaryCardTopicViewModel.tsx";
-import { FaArrowRight, FaFolder, FaLink, FaRegFolderOpen } from "react-icons/fa6";
+import { FaArrowRight, FaChevronRight, FaFolder, FaLink, FaRegFolderOpen } from "react-icons/fa6";
 import { IoFolderOpenOutline } from "react-icons/io5";
 import { BsPlayCircle } from "react-icons/bs";
 import { CiFileOn, CiImageOn } from "react-icons/ci";
@@ -462,13 +462,13 @@ const RoomSummaryCardView: React.FC<IProps> = ({ phase = '', room, permalinkCrea
     const mediaSummary = (
         <section className="mx_RoomSummaryCard_mediaSection">
             <div className="mx_RoomSummaryCard_mediaHeader">
-                <div className="mx_iconCircle">
-                    <FaArrowRight />
-                </div>
+                <button onClick={() => RightPanelStore.instance.showOrHidePhase(RightPanelPhases.RoomSummary)} className="mx_iconCircle">
+                    <FaChevronRight />
+                </button>
                 <Heading as="h3" weight="medium">Médias</Heading>
             </div>
-            <hr className="mx_divider" />
-            <Heading as="h3"> Fichiers</Heading>
+            {/* <hr className="mx_divider" /> */}
+            <Heading as="h4">Fichiers</Heading>
             <div className="mx_RoomSummaryCard_mediaStats">
                 <div className="mx_statCard mx_statCard--blue">
                     <Text size="xs" weight="medium">Total fichiers</Text>

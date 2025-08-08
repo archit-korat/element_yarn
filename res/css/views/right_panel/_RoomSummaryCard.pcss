@@ -106,11 +106,11 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_RoomSummaryCard_mediaSection {
-    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding:35px
+    padding-inline: 16px;
+    background-color: $roomlist-bg-color;
 }
 
 .mx_RoomSummaryCard_mediaStats {
@@ -232,17 +232,18 @@ Please see LICENSE files in the repository root for full details.
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    padding: 16px 0;
+    border-bottom: 1px solid $quinary-content;
 }
 
 .mx_iconCircle {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: #f1f1f1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #333;
+   padding: 8px;
+      border-radius: 9999px;
+      background-color: var(--cpd-toggle-chatpanel-icon-bg-color);
+      color: var(--cpd-color-icon-secondary);
+      cursor: pointer;
+      border: none;
+      outline: none;
 }
 
 .theme-dark .mx_iconCircle {
@@ -252,7 +253,7 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_divider {
     border: none;
-    border-bottom: 1px solid var(--cpd-color-border-subtle, #e5e7eb);
+    border-bottom: 1px solid $quinary-content;
     margin: 0.25rem 0 0.5rem;
 }
 .mx_RoomSummaryCard_mediaTypeRow {

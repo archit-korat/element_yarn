@@ -397,7 +397,7 @@ const SpacePanel: React.FC = () => {
                         <ul className="mx_SpacePanel_menu">
                             <Link href="#/home"
                                 className={classNames("mx_SpacePanel_menuItem", {
-                                    "mx_SpacePanel_menuItem--active": hashPath === "/home",
+                                    "mx_SpacePanel_menuItem--active": hashPath === "/home" || hashPath.includes("/room"),
                                 })}
                             >
                                 <AiOutlineMessage size={25} />

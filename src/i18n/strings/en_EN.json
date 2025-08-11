@@ -651,7 +651,7 @@
         "mode_rich_text": "Show formatting",
         "no_perms_notice": "You do not have permission to post to this room",
         "placeholder": "Send a message…",
-        "placeholder_encrypted": "Send an encrypted message…",
+        "placeholder_encrypted": "Écrire un message...",
         "placeholder_reply": "Send a reply…",
         "placeholder_reply_encrypted": "Send an encrypted reply…",
         "placeholder_thread": "Reply to thread…",

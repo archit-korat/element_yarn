@@ -38,7 +38,7 @@ Please see LICENSE files in the repository root for full details.
 /* not the left panel, and not the resize handle, so the roomview and friends */
 .mx_MatrixChat > :not(.mx_LeftPanel):not(.mx_SpacePanel):not(.mx_ResizeHandle):not(.mx_LeftPanel_outerWrapper) {
     background-color: $background;
-
+   background-image: url("/res/img/Rectangle.png");
     flex: 1 1 0;
     min-width: 0;
 
@@ -47,6 +47,10 @@ Please see LICENSE files in the repository root for full details.
        have to be auto, empirically.
     */
     height: 100%;
+
+       .cpd-theme-dark & {
+        background-image: url("/res/img/Rectangledark.png");
+    }
 }
 
 .mx_MatrixChat > .mx_ResizeHandle--horizontal:hover {
@@ -106,4 +110,9 @@ Please see LICENSE files in the repository root for full details.
         font-size: 0.875rem; /* md:text-sm */
     }
 }
+.dark .mx_MatrixChat > :not(.mx_LeftPanel):not(.mx_SpacePanel):not(.mx_ResizeHandle):not(.mx_LeftPanel_outerWrapper) {
+    background-color: red !important;
+}
+
+
 

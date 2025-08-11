@@ -77,6 +77,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     isMinimized: boolean;
     activeSpace: SpaceKey;
+    searchQuery?: string;
 }
 
 interface IState {
@@ -642,6 +643,7 @@ export default class LegacyRoomList extends React.PureComponent<IProps, IState> 
                     alwaysVisible={alwaysVisible}
                     onListCollapse={this.props.onListCollapse}
                     forceExpanded={forceExpanded}
+                    searchQuery={this.props.searchQuery}
                 />
             );
         });

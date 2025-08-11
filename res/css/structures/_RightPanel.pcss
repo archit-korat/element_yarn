@@ -8,7 +8,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 .mx_RightPanel {
-    overflow-x: hidden;
+    overflow: hidden;
     flex: 0 0 auto;
     position: relative;
     display: flex;
@@ -18,6 +18,7 @@ Please see LICENSE files in the repository root for full details.
     height: 100%;
     contain: strict;
     background-color: var(--cpd-color-bg-canvas-default);
+    z-index: 100;
 
     .mx_RoomView_MessageList {
         padding: 14px 18px; /* top and bottom is 4px smaller to balance with the padding set above */

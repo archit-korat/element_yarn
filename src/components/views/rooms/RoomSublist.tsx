@@ -71,6 +71,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     extraTiles?: ReactComponentElement<typeof ExtraTile>[] | null;
     onListCollapse?: (isExpanded: boolean) => void;
+    searchQuery?: string;
 }
 
 function getLabelId(tagId: TagID): string {
@@ -490,7 +491,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
     };
 
-    private renderVisibleTiles(): React.ReactElement[] {
+    private renderVisibleTiles(searchQuery: string | undefined): React.ReactElement[] {
         if (!this.state.isExpanded && !this.props.forceExpanded) {
             // don't waste time on rendering
             return [];
@@ -504,7 +505,17 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 visibleRooms = visibleRooms.slice(0, this.numVisibleTiles);
             }
 
-            for (const room of visibleRooms) {
+            // const searched = this.state.rooms.filter(user =>
+            //     user.normalizedName.toLowerCase().includes(this.props.searchQuery.toLowerCase())
+            // );
+
+            const searchedRooms = this.state.rooms.filter(user => {
+                const match = (user.normalizedName || "").toLowerCase().includes(this.props.searchQuery?.toLocaleLowerCase() || "");
+                // console.log(user.normalizedName, match);
+                return match;
+            });
+
+            for (const room of searchedRooms) {
                 tiles.push(
                     <RoomTile
                         room={room}
@@ -706,8 +717,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     public render(): React.ReactElement {
-        const visibleTiles = this.renderVisibleTiles();
+        const visibleTiles = this.renderVisibleTiles(this.props.searchQuery);
+
         const hidden = !this.state.rooms.length && !this.props.extraTiles?.length && this.props.alwaysVisible !== true;
+
         const classes = classNames({
             mx_RoomSublist: true,
             mx_RoomSublist_hasMenuOpen: !!this.state.contextMenuPosition,
@@ -715,6 +728,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             mx_RoomSublist_hidden: hidden,
         });
 
+        console.log("visibleTiles", visibleTiles.length, this.props.forceExpanded);
         let content: JSX.Element | undefined;
         if (this.state.roomsLoading) {
             content = <div className="mx_RoomSublist_skeletonUI" />;

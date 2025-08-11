@@ -383,6 +383,7 @@ class RoomTile extends React.PureComponent<Props, State> {
         });
 
         let name = this.props.room.name;
+
         if (typeof name !== "string") name = "";
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 

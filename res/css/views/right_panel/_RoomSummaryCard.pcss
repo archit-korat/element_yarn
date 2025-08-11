@@ -106,11 +106,13 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_RoomSummaryCard_mediaSection {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     padding-inline: 16px;
     background-color: $roomlist-bg-color;
+    overflow-y: auto;
 }
 
 .mx_RoomSummaryCard_mediaStats {

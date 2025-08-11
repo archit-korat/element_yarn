@@ -61,6 +61,7 @@ interface IState {
     activeSpace: SpaceKey;
     supportsPstnProtocol: boolean;
     isMinimized: boolean;
+    searchQuery: string;
 }
 
 export default class LeftPanel extends React.Component<IProps, IState> {
@@ -77,6 +78,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             showBreadcrumbs: LeftPanel.breadcrumbsMode,
             supportsPstnProtocol: LegacyCallHandler.instance.getSupportsPstnProtocol(),
             isMinimized: this.props.isMinimized || false,
+            searchQuery: ''
         };
     }
 
@@ -451,6 +453,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onResize={this.refreshStickyHeaders}
                 onListCollapse={this.refreshStickyHeaders}
                 ref={this.roomListRef}
+                searchQuery={this.state.searchQuery}
             />
         );
 
@@ -507,6 +510,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                                             <input
                                                 placeholder="Rechercher..."
                                                 className="search-input"
+                                                value={this.state.searchQuery}
+                                                onChange={(e) => this.setState({ searchQuery: e.target.value })}
                                             />
                                             <button className="search-button">
                                                 <HiOutlineSearch fontSize={16} />

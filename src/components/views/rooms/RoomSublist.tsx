@@ -728,7 +728,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             mx_RoomSublist_hidden: hidden,
         });
 
-        console.log("visibleTiles", visibleTiles.length, this.props.forceExpanded);
         let content: JSX.Element | undefined;
         if (this.state.roomsLoading) {
             content = <div className="mx_RoomSublist_skeletonUI" />;

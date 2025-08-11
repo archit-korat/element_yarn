@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 
 :root{
   --cpd-toggle-chatpanel-icon-bg-color: #E1E6EC;
+  --cpd-border-bottom-color-new: #C8C8C8;
 }
 
 .mx_MatrixChat--with-avatar {
@@ -66,6 +67,7 @@ Please see LICENSE files in the repository root for full details.
     overflow: hidden;
     width: 20%;
     padding-inline: 16px;
+    padding-top: 12px;
 
     border-top-left-radius: 24px;
     border-bottom-left-radius: 24px;
@@ -292,7 +294,7 @@ Please see LICENSE files in the repository root for full details.
 .chat-header {
       width: 100%;
       padding: 16px 0;
-      border-bottom: 1px solid $quinary-content;
+      border-bottom: 1px solid var(--cpd-border-bottom-color-new);
     }
 
     .chat-header-inner {

@@ -20,6 +20,20 @@ Please see LICENSE files in the repository root for full details.
     contain: strict;
 }
 
+.customDivForChat{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-inline: 12px;
+    
+    background: url("/res/img/Rectangle.png") no-repeat center/cover;
+    .cpd-theme-dark & {
+        background: url("/res/img/Rectangledark.png") no-repeat center/cover;
+    }
+    border-radius: 24px;
+}
+
 @media (max-width: 768px) {
     .mx_RoomView_wrapper{
         margin-left: 80px;
@@ -86,6 +100,7 @@ Please see LICENSE files in the repository root for full details.
     flex-direction: column;
     flex: 1;
     min-width: 0;
+    padding: 12px;
 
     .mx_RoomView_messagePanel,
     .mx_RoomView_messagePanelSpinner,

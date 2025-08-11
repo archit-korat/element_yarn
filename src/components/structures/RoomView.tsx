@@ -136,7 +136,7 @@ import { type FocusMessageSearchPayload } from "../../dispatcher/payloads/FocusM
 
 const DEBUG = false;
 const PREVENT_MULTIPLE_JITSI_WITHIN = 30_000;
-let debuglog = function (msg: string): void {};
+let debuglog = function (msg: string): void { };
 
 const BROWSER_SUPPORTS_SANDBOX = "sandbox" in document.createElement("iframe");
 
@@ -2643,11 +2643,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                                 ref={this.roomViewBody}
                                 data-layout={this.state.layout}
                             >
-                                <RoomHeader
-                                    room={this.state.room}
-                                    additionalButtons={this.state.viewRoomOpts.buttons}
-                                />
-                                {mainSplitBody}
+                                <div className="customDivForChat">
+                                    <RoomHeader
+                                        room={this.state.room}
+                                        additionalButtons={this.state.viewRoomOpts.buttons}
+                                    />
+                                    {mainSplitBody}
+                                </div>
                             </div>
                         </MainSplit>
                     </ErrorBoundary>

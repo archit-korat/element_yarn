@@ -6,6 +6,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+.mx_EventTile.mx_EventTile_bad {
+    display: none;
+}
+
 .mx_RoomView_body[data-layout="bubble"] {
     .mx_RoomView_timeline,
     .mx_RoomView_statusArea,
@@ -13,6 +17,96 @@ Please see LICENSE files in the repository root for full details.
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
+    }
+}
+
+.mx_EventTile_msgOption {
+    display: none;
+}
+
+.mx_EventTile[data-self="true"] {
+    margin-left: auto;
+
+    & .mx_EventTile_line {
+        width: fit-content;
+        margin-left: auto;
+        background-color: var(--cpd-self-msg-bg-color);
+        color: var(--cpd-self-msg-text-color);
+        position: relative;
+
+        & .mx_LegacyCallEvent_wrapper {
+            background-color: var(--cpd-self-msg-bg-color);
+            color: var(--cpd-self-msg-text-color) !important;
+            border-radius: 16px;
+
+            & .mx_LegacyCallEvent {
+                background-color: var(--cpd-self-msg-bg-color);
+                color: var(--cpd-self-msg-text-color) !important;
+            }
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            /* top: 0;
+            left: 0; */
+            width: 10px;
+            height: 14px;
+            transform: rotate(120deg);
+            right: -6px;
+            bottom: -5px;
+            background-color: inherit;
+            clip-path: polygon(100% 100%, 54% 0, 0 98%);
+            z-index: -1;
+        }
+
+        & .mx_MessageActionBar {
+            right: 0;
+        }
+    }
+}
+
+.mx_EventTile[data-self="false"] {
+    margin-left: 8px;
+    margin-right: auto;
+
+    & .mx_EventTile_line {
+        width: fit-content;
+        margin-right: auto;
+        background-color: var(--cpd-other-msg-bg-color);
+        color: var(--cpd-other-msg-text-color);
+        position: relative;
+
+        & .mx_LegacyCallEvent_wrapper {
+            background-color: var(--cpd-other-msg-bg-color);
+            color: var(--cpd-other-msg-text-color) !important;
+            border-radius: 16px;
+
+            & .mx_LegacyCallEvent {
+                background-color: var(--cpd-other-msg-bg-color);
+                color: var(--cpd-other-msg-text-color) !important;
+            }
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            /* top: 0;
+            left: 0; */
+            width: 10px;
+            height: 14px;
+            transform: rotate(-120deg);
+            left: -6px;
+            bottom: -5px;
+            background-color: inherit;
+            clip-path: polygon(0 100%, 46% 0, 100% 98%);
+            z-index: -1;
+        }
+
+        & .mx_MessageActionBar {
+            left: 0;
+            width: fit-content;
+        }
     }
 }
 
@@ -470,6 +564,7 @@ Please see LICENSE files in the repository root for full details.
     }
 
     &.mx_EventTile_bad {
+        display: none;
         &:hover {
             &::before {
                 background: transparent;

@@ -28,11 +28,12 @@ export const enum SeparatorKind {
 const TimelineSeparator: React.FC<Props> = ({ label, children }) => {
     // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
     return (
-        <div className="mx_TimelineSeparator" role="separator" aria-label={label}>
-            <hr role="none" />
-            {children}
-            <hr role="none" />
-        </div>
+        <></>
+        // <div className="mx_TimelineSeparator" role="separator" aria-label={label}>
+        //     <hr role="none" />
+        //     {children}
+        //     <hr role="none" />
+        // </div>
     );
 };
 

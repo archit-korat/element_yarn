@@ -8,6 +8,11 @@ Please see LICENSE files in the repository root for full details.
 
 :root {
     --RoomView_MessageList-padding: 18px;
+    --cpd-self-msg-bg-color: #DEDEDE;
+    --cpd-self-msg-text-color: #000000;
+
+    --cpd-other-msg-bg-color: #FFFFFF;
+    --cpd-other-msg-text-color: #000000;
 }
 
 .mx_RoomView_wrapper {
@@ -70,6 +75,7 @@ Please see LICENSE files in the repository root for full details.
     overflow-y: auto;
     flex: 1 1 0;
     overflow-anchor: none;
+    padding-bottom: 0;
 }
 
 .mx_RoomView_messagePanelSearchSpinner {
@@ -106,6 +112,7 @@ Please see LICENSE files in the repository root for full details.
     .mx_RoomView_messagePanelSpinner,
     .mx_RoomView_messagePanelSearchSpinner {
         order: 2;
+        padding-inline: 12px;
     }
 
     .mx_RoomView_timeline {
@@ -114,7 +121,6 @@ Please see LICENSE files in the repository root for full details.
         flex: 1;
         display: flex;
         flex-direction: column;
-        margin-right: calc(var(--container-gap-width) / 2);
     }
 }
 
@@ -150,6 +156,7 @@ Please see LICENSE files in the repository root for full details.
     flex-direction: column;
     justify-content: flex-end;
     position: relative;
+    padding-bottom: 0px !important;
 }
 
 .mx_RoomView_searchResultsPanel {
@@ -177,7 +184,6 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_RoomView_MessageList {
     list-style-type: none;
-    padding: var(--RoomView_MessageList-padding); /* mx_ProfileResizer depends on this value */
     margin: 0;
     /* needed as min-height is set to clientHeight in ScrollPanel
     to prevent shrinking when WhoIsTypingTile is hidden */
@@ -195,6 +201,7 @@ Please see LICENSE files in the repository root for full details.
 
         content-visibility: auto;
         contain-intrinsic-size: 50px;
+        gap: 10px;
     }
 
     .mx_RoomView--local .mx_ScrollPanel & {

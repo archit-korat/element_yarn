@@ -767,7 +767,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                 return <E2ePadlock icon={E2ePadlockIcon.Normal} title={shieldReasonMessage} />;
             } else {
                 // red, by elimination
-                return <E2ePadlock icon={E2ePadlockIcon.Warning} title={shieldReasonMessage} />;
+                // return <E2ePadlock icon={E2ePadlockIcon.Warning} title={shieldReasonMessage} />;
+                return null;
             }
         }
 
@@ -1230,7 +1231,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     [
                         <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                             {avatar}
-                            {sender}
+                            {/* {sender} */}
                         </div>,
                         <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
                             {this.renderContextMenu()}
@@ -1249,9 +1250,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                 showHiddenEvents: this.context.showHiddenEvents,
                             })}
                             {actionBar}
-                            <a href={permalink} onClick={this.onPermalinkClicked}>
+                            {/* <a href={permalink} onClick={this.onPermalinkClicked}>
                                 {timestamp}
-                            </a>
+                            </a> */}
                             {msgOption}
                         </div>,
                         hasFooter && (
@@ -1304,7 +1305,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     },
                     <>
                         <div className="mx_EventTile_details">
-                            {sender}
+                            {/* {sender} */}
                             {isRenderingNotification && room ? (
                                 <span className="mx_EventTile_truncated">
                                     {" "}
@@ -1324,13 +1325,13 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                 forceDot={true}
                             />
                         </div>
-                        {isRenderingNotification && room ? (
+                        {/* {isRenderingNotification && room ? (
                             <div className="mx_EventTile_avatar">
                                 <RoomAvatar room={room} size="28px" />
                             </div>
                         ) : (
                             avatar
-                        )}
+                        )} */}
                         <div className={lineClasses} key="mx_EventTile_line">
                             <div className="mx_EventTile_body">
                                 {this.props.mxEvent.isRedacted() ? (
@@ -1371,8 +1372,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             onClick={this.onPermalinkClicked}
                         >
                             <div className="mx_EventTile_senderDetails" onContextMenu={this.onTimestampContextMenu}>
-                                {avatar}
-                                {sender}
+                                {/* {avatar} */}
+                                {/* {sender} */}
                                 {timestamp}
                             </div>
                         </a>,
@@ -1416,13 +1417,13 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "onMouseLeave": () => this.setState({ hover: false }),
                     },
                     <>
-                        {ircTimestamp}
-                        {sender}
+                        {/* {ircTimestamp} */}
+                        {/* {sender} */}
                         {ircPadlock}
-                        {avatar}
+                        {/* {avatar} */}
                         <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
                             {this.renderContextMenu()}
-                            {groupTimestamp}
+                            {/* {groupTimestamp} */}
                             {groupPadlock}
                             {replyChain}
                             {renderTile(this.context.timelineRenderingType, {

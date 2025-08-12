@@ -20,12 +20,13 @@ interface IProps {
 
 const EventTileBubble = ({ className, title, timestamp, subtitle, children, ref }: IProps): JSX.Element => {
     return (
-        <div className={classNames("mx_EventTileBubble", className)} ref={ref}>
-            <div className="mx_EventTileBubble_title">{title}</div>
-            {subtitle && <div className="mx_EventTileBubble_subtitle">{subtitle}</div>}
-            {children}
-            {timestamp}
-        </div>
+        <></>
+        // <div className={classNames("mx_EventTileBubble", className)} ref={ref}>
+        //     <div className="mx_EventTileBubble_title">{title}</div>
+        //     {subtitle && <div className="mx_EventTileBubble_subtitle">{subtitle}</div>}
+        //     {children}
+        //     {timestamp}
+        // </div>
     );
 };
 

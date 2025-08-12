@@ -173,15 +173,16 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             mx_EventTile_sending: isSending,
         });
         return (
-            <li>
-                <div className={classes}>
-                    <div className="mx_EventTile_line">
-                        <span className="mx_MessageTimestamp">{timestamp}</span>
-                        {contentContainer}
-                        {this.renderActionBar()}
-                    </div>
-                </div>
-            </li>
+            <></>
+            // <li>
+            //     <div className={classes}>
+            //         <div className="mx_EventTile_line">
+            //             <span className="mx_MessageTimestamp">{timestamp}</span>
+            //             {contentContainer}
+            //             {this.renderActionBar()}
+            //         </div>
+            //     </div>
+            // </li>
         );
     }
 }

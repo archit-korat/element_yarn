@@ -6,6 +6,42 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+.mx_EventTile[data-self="true"] {
+    & .mx_LegacyCallEvent_type {
+        color: var(--cpd-self-msg-text-color) !important;
+
+        & .mx_LegacyCallEvent_type_icon {
+            color: var(--cpd-self-msg-text-color) !important;
+        }
+    }
+
+    & .mx_LegacyCallEvent_type_icon::before {
+        background-color: var(--cpd-self-msg-text-color) !important;
+    }
+
+    & .mx_LegacyCallEvent_wrapper .mx_LegacyCallEvent .mx_LegacyCallEvent_content {
+        color: var(--cpd-self-msg-text-color) !important;
+    }
+}
+
+.mx_EventTile[data-self="false"] {
+    & .mx_LegacyCallEvent_type {
+        color: var(--cpd-other-msg-text-color) !important;
+
+        & .mx_LegacyCallEvent_type_icon {
+            color: var(--cpd-other-msg-text-color) !important;
+        }
+    }
+
+    & .mx_LegacyCallEvent_type_icon::before {
+        background-color: var(--cpd-other-msg-text-color) !important;
+    }
+
+    & .mx_LegacyCallEvent_wrapper .mx_LegacyCallEvent .mx_LegacyCallEvent_content {
+        color: var(--cpd-other-msg-text-color) !important;
+    }
+}
+
 .mx_LegacyCallEvent_wrapper {
     display: flex;
     width: 100%;
@@ -19,7 +55,6 @@ Please see LICENSE files in the repository root for full details.
         gap: $spacing-4 0;
 
         position: relative;
-        margin: $spacing-4 0;
         padding: $spacing-12 $spacing-24;
         box-sizing: border-box;
         background-color: $dark-panel-bg-color;

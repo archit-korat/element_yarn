@@ -62,24 +62,26 @@ const GenericEventListSummary: React.FC<IProps> = ({
     // If we are only given few events then just pass them through
     if (events.length < threshold) {
         return (
-            <li
-                className="mx_GenericEventListSummary"
-                data-scroll-tokens={eventIds}
-                data-expanded={true}
-                data-layout={layout}
-            >
-                <ol className="mx_GenericEventListSummary_unstyledList">{children}</ol>
-            </li>
+            <></>
+            // <li
+            //     className="mx_GenericEventListSummary"
+            //     data-scroll-tokens={eventIds}
+            //     data-expanded={true}
+            //     data-layout={layout}
+            // >
+            //     <ol className="mx_GenericEventListSummary_unstyledList">{children}</ol>
+            // </li>
         );
     }
 
     let body;
     if (expanded) {
         body = (
-            <React.Fragment>
-                <div className="mx_GenericEventListSummary_spacer">&nbsp;</div>
-                <ol className="mx_GenericEventListSummary_unstyledList">{children}</ol>
-            </React.Fragment>
+            <></>
+            // <React.Fragment>
+            //     <div className="mx_GenericEventListSummary_spacer">&nbsp;</div>
+            //     <ol className="mx_GenericEventListSummary_unstyledList">{children}</ol>
+            // </React.Fragment>
         );
     } else {
         const uniqueMembers = uniqBy(
@@ -97,35 +99,37 @@ const GenericEventListSummary: React.FC<IProps> = ({
         );
         const avatars = uniqueMembers.map((m) => <MemberAvatar key={m.userId} member={m} size="14px" />);
         body = (
-            <div className="mx_EventTile_line">
-                <div className="mx_EventTile_info">
-                    <span className="mx_GenericEventListSummary_avatars" onClick={toggleExpanded}>
-                        {avatars}
-                    </span>
-                    <span className="mx_TextualEvent mx_GenericEventListSummary_summary">{summaryText}</span>
-                </div>
-            </div>
+            <></>
+            // <div className="mx_EventTile_line">
+            //     <div className="mx_EventTile_info">
+            //         <span className="mx_GenericEventListSummary_avatars" onClick={toggleExpanded}>
+            //             {avatars}
+            //         </span>
+            //         <span className="mx_TextualEvent mx_GenericEventListSummary_summary">{summaryText}</span>
+            //     </div>
+            // </div>
         );
     }
 
     return (
-        <li
-            className="mx_GenericEventListSummary"
-            data-scroll-tokens={eventIds}
-            data-expanded={expanded + ""}
-            data-layout={layout}
-            data-testid={testId}
-        >
-            <AccessibleButton
-                kind="link_inline"
-                className="mx_GenericEventListSummary_toggle"
-                onClick={toggleExpanded}
-                aria-expanded={expanded}
-            >
-                {expanded ? _t("action|collapse") : _t("action|expand")}
-            </AccessibleButton>
-            {body}
-        </li>
+        null
+        // <li
+        //     className="mx_GenericEventListSummary"
+        //     data-scroll-tokens={eventIds}
+        //     data-expanded={expanded + ""}
+        //     data-layout={layout}
+        //     data-testid={testId}
+        // >
+        //     <AccessibleButton
+        //         kind="link_inline"
+        //         className="mx_GenericEventListSummary_toggle"
+        //         onClick={toggleExpanded}
+        //         aria-expanded={expanded}
+        //     >
+        //         {expanded ? _t("action|collapse") : _t("action|expand")}
+        //     </AccessibleButton>
+        //     {body}
+        // </li>
     );
 };
 

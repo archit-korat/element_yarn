@@ -67,6 +67,7 @@ export default function RoomHeader({
     const client = useMatrixClientContext();
 
     const roomName = useRoomName(room);
+    const lastName = room.normalizedName;
     const joinRule = useRoomState(room, (state) => state.getJoinRule());
 
     const members = useRoomMembers(room, 2500);
@@ -183,7 +184,7 @@ export default function RoomHeader({
                                     videoCallClick(ev, option);
                                 }}
                                 Icon={VideoCallIcon}
-                                onSelect={() => {} /* Dummy handler since we want the click event.*/}
+                                onSelect={() => { } /* Dummy handler since we want the click event.*/}
                             />
                         );
                     })}
@@ -314,6 +315,13 @@ export default function RoomHeader({
                                         />
                                     </Tooltip>
                                 )}
+                            </BodyText>
+                            <BodyText
+                                as="div"
+                                size="sm"
+                                className="mx_RoomHeader_typingIndicator"
+                            >
+                                {lastName}
                             </BodyText>
                         </Box>
                     </button>

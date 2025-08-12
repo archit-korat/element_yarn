@@ -208,10 +208,13 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
 
         return (
             <li className="mx_WhoIsTypingTile" aria-atomic="true">
-                <div className="mx_WhoIsTypingTile_avatars">
+                {/* <div className="mx_WhoIsTypingTile_avatars">
                     {this.renderTypingIndicatorAvatars(usersTyping, this.props.whoIsTypingLimit)}
                 </div>
-                <div className="mx_WhoIsTypingTile_label">{typingString}</div>
+                <div className="mx_WhoIsTypingTile_label">{typingString}</div> */}
+                <p></p>
+                <p></p>
+                <p></p>
             </li>
         );
     }

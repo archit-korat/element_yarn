@@ -468,7 +468,8 @@ const RoomSummaryCardView: React.FC<IProps> = ({ phase = '', room, permalinkCrea
                 <Heading as="h3" weight="medium">Médias</Heading>
             </div>
             {/* <hr className="mx_divider" /> */}
-            <Heading as="h4">Fichiers</Heading>
+            {/* <Heading as="h4">Fichiers</Heading> */}
+            <Heading as="h3" weight="medium">Fichiers</Heading>
             <div className="mx_RoomSummaryCard_mediaStats">
                 <div className="mx_statCard mx_statCard--blue">
                     <Text size="xs" weight="medium">Total fichiers</Text>

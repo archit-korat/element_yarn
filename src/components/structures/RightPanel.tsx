@@ -258,7 +258,7 @@ export default class RightPanel extends React.Component<Props, IState> {
                         <RoomSummaryCardView
                             phase={phase}
                             room={this.props.room}
-                            
+
                             // whenever RightPanel is passed a room it is passed a permalinkcreator
                             permalinkCreator={this.props.permalinkCreator!}
                             onSearchChange={this.props.onSearchChange}
@@ -266,6 +266,11 @@ export default class RightPanel extends React.Component<Props, IState> {
                             searchTerm={this.props.searchTerm}
                             focusRoomSearch={cardState?.focusRoomSearch}
                         />
+                        // <FilePanel
+                        //     roomId={this.props.room.roomId}
+                        //     resizeNotifier={this.props.resizeNotifier}
+                        //     onClose={() => RightPanelStore.instance.showOrHidePhase(RightPanelPhases.RoomSummary)}
+                        // />
                     );
                 }
                 break;

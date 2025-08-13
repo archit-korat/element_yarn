@@ -6,6 +6,12 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
+:root {
+    --cpd-total-file-link-title-color: #000000;
+    --cpd-file-icon-color: #1D98BA73;
+    --cpd-link-icon-color: #6C6C6C73;
+}
+
 .mx_RoomSummaryCard {
     --cpd-separator-inset: var(--cpd-space-4x);
     --cpd-separator-spacing: var(--cpd-space-4x);
@@ -127,16 +133,20 @@ Please see LICENSE files in the repository root for full details.
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    & p {
+        color: var(--cpd-total-file-link-title-color);
+    }
 }
 
 .mx_statCard--blue {
     background-color: #19AFD829;
-    color: #004e66;
+    color: var(--cpd-file-icon-color);
 }
 
 .mx_statCard--gray {
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #83838329;
+    color: var(--cpd-link-icon-color);
 }
 
 .mx_statCard_content {
@@ -147,6 +157,7 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_statIcon {
     font-size: 20px;
+    color: var(--cpd)
 }
 .mx_RoomSummaryCard_mediaBox {
     flex: 1;
@@ -205,12 +216,12 @@ Please see LICENSE files in the repository root for full details.
 .mx_fileIcon {
     width: 32px;
     height: 32px;
-    background-color: var(--cpd-color-bg-subtle, #e5e7eb);
+    background-color: #EBEBEB;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--cpd-color-icon-file, #A1A1A1);
+    color: #A1A1A1;
 }
 
 
@@ -300,6 +311,10 @@ Please see LICENSE files in the repository root for full details.
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    & p {
+        color: #39785A;
+    }
 }
 
 .mx_moreIcon {

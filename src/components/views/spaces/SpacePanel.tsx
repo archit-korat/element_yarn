@@ -372,6 +372,34 @@ const SpacePanel: React.FC = () => {
     const newRoomListEnabled = useSettingValue("feature_new_room_list");
 
     const hashPath = window.location.hash.substring(1);
+    const UnreadMessageBadge = () => {
+    const [count, setCount] = useState(0);
+    
+    useEffect(() => {
+        // Get initial count
+        const notificationState = RoomNotificationStateStore.instance.globalState;
+        setCount(notificationState.count);
+        
+        // Listen for changes
+        const updateCount = () => {
+            const state = RoomNotificationStateStore.instance.globalState;
+            setCount(state.count);
+        };
+        
+        RoomNotificationStateStore.instance.on(UPDATE_STATUS_INDICATOR, updateCount);
+        return () => {
+            RoomNotificationStateStore.instance.off(UPDATE_STATUS_INDICATOR, updateCount);
+        };
+    }, []);
+
+    if (count === 0) return null;
+    
+    return (
+        <span className="menu-badge">
+            {count > 99 ? '99+' : count}
+        </span>
+    );
+};
 
     return (
         <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
@@ -400,7 +428,10 @@ const SpacePanel: React.FC = () => {
                                     "mx_SpacePanel_menuItem--active": hashPath === "/home" || hashPath.includes("/room"),
                                 })}
                             >
-                                <AiOutlineMessage size={25} />
+                                <div className="menu-icon-wrapper">
+                                    <AiOutlineMessage size={25} />
+                                      <UnreadMessageBadge />
+                                </div>
                                 <span className="mx_SpacePanel_menuLabel">Chat</span>
                             </Link>
 

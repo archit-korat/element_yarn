@@ -314,18 +314,20 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
     return (
         <div className="mx_RoomView mx_RoomView--local">
             <ErrorBoundary>
-                <RoomHeader room={room} />
-                <main className="mx_RoomView_body" ref={props.roomView} aria-label={_t("room|room_content")}>
-                    <FileDropTarget parent={props.roomView.current} onFileDrop={props.onFileDrop} room={room} />
-                    <div className="mx_RoomView_timeline">
-                        <ScrollPanel className="mx_RoomView_messagePanel" resizeNotifier={props.resizeNotifier}>
-                            {encryptionTile}
-                            <NewRoomIntro />
-                        </ScrollPanel>
-                    </div>
-                    {statusBar}
-                    {composer}
-                </main>
+                <div className="customDivForChat">
+                    <RoomHeader room={room} />
+                    <main className="mx_RoomView_body" ref={props.roomView} aria-label={_t("room|room_content")}>
+                        <FileDropTarget parent={props.roomView.current} onFileDrop={props.onFileDrop} room={room} />
+                        <div className="mx_RoomView_timeline">
+                            <ScrollPanel className="mx_RoomView_messagePanel" resizeNotifier={props.resizeNotifier}>
+                                {encryptionTile}
+                                <NewRoomIntro />
+                            </ScrollPanel>
+                        </div>
+                        {statusBar}
+                        {composer}
+                    </main>
+                </div>
             </ErrorBoundary>
         </div>
     );

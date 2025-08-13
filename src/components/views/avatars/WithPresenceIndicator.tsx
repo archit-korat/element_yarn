@@ -102,7 +102,7 @@ export const usePresence = (room: Room, member: RoomMember | null): Presence | n
 
 const WithPresenceIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
     const dmMember = useDmMember(room);
-    const presence = usePresence(room, dmMember);
+    const presence = usePresence(room, dmMember);  
 
     let icon: JSX.Element | undefined;
     if (presence) {

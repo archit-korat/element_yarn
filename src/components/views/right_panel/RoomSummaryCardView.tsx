@@ -475,14 +475,14 @@ const RoomSummaryCardView: React.FC<IProps> = ({ phase = '', room, permalinkCrea
                     <Text size="xs" weight="medium">Total fichiers</Text>
                     <div className="mx_statCard_content">
                         <FaFolder className="mx_statIcon" />
-                        <Text size="lg" weight="bold">150</Text>
+                        <Heading as="h6" weight="bold">150</Heading>
                     </div>
                 </div>
                 <div className="mx_statCard mx_statCard--gray">
                     <Text size="xs" weight="medium">Les liens</Text>
                     <div className="mx_statCard_content">
                         <FaLink className="mx_statIcon" />
-                        <Text size="lg" weight="bold">15</Text>
+                        <Heading as="h6" weight="bold">15</Heading>
                     </div>
                 </div>
             </div>
